@@ -1,0 +1,406 @@
+\documentclass[letterpaper, 12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{quiver}
+\usepackage{mathrsfs}
+\usepackage{array}
+\usepackage{amssymb}
+\usepackage{mathabx}
+\usepackage{changepage}
+%\geometry{legalpaper, portrait, margin=1in}
+\usepackage{mathtools}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\sph}{\mathbb{S}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\End}{\text{End}}
+\newcommand{\Aut}{\text{Aut}}
+\newcommand{\Hom}{\text{Hom}}
+\newcommand{\id}{\text{id}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\quat}{\mathbb{H}}
+\newcommand{\liegl}{\mathfrak{gl}}
+\newcommand{\p}{\mathfrak{p}}
+\newcommand{\m}{\mathfrak{m}}
+\newcommand{\SL}{\text{SL}}
+\newcommand{\GL}{\text{GL}}
+\newcommand{\PSL}{\text{PSL}}
+\newcommand{\PGL}{\text{PGL}}
+\newcommand{\SU}{\text{SU}}
+\newcommand{\SO}{\text{SO}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\lb}{\mathcal{O}}
+
+\NewDocumentCommand{\paren}{m}{%
+  \left(%
+    {#1}%
+  \right)%
+}
+
+\DeclareMathOperator{\im}{\text{im}}
+\DeclareMathOperator{\coker}{\text{coker}}
+\DeclareMathOperator{\rk}{\text{rk}}
+\DeclareMathOperator{\Frac}{\text{Frac}}
+\DeclareMathOperator{\Ann}{\text{Ann}}
+\DeclareMathOperator{\Supp}{\text{Supp}}
+\DeclareMathOperator{\colim}{\text{colim}}
+\DeclareMathOperator{\Spec}{\text{Spec}}
+\DeclareMathOperator{\Proj}{\text{Proj}}
+\DeclareMathOperator{\D}{\mathcal{D}}
+
+\newtheorem{theorem}{Theorem}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\theoremstyle{remark}
+\newtheorem{example}{Example}
+
+\newcommand{\F}{\mathscr{F}}
+\newcommand{\sH}{\mathscr{H}}
+
+
+\title{Perverse Sheaves and Intersection Cohomology}
+\date{November 17, 2024}
+
+%\addtolength{\topmargin}{-0.5in}
+
+\begin{document}
+
+\maketitle
+
+These are notes I wrote up for my own comprehension while reading the text of Hotta--Takeuchi--Tanisaki.
+
+\section{T-Structures}
+\begin{definition}
+    Let $\D$ be a triangulated category, and $\D^{\leq 0}, \D^{\geq 0}$ its full subcategories. Set $\D^{\leq n} = \D^{\leq 0}[n]$. The pair $(\D^{\leq 0}, \D^{\geq 0})$ defines a t-structure on $\D$ if
+    \begin{itemize}
+        \item $\D^{\leq -1} \subseteq \D^{\leq 0}, \D^{\geq 1} \subseteq \D^{\geq 0}$
+        \item For all $X \in \D^{\leq 0}$ and $Y \in \D^{\geq 1}$ we have $\Hom_{\D}(X, Y) = 0.$
+        \item For any $X \in \D$ there exists an exact triangle
+        \begin{equation}
+            X_0 \to X \to X_1 \overset{+1}{\to} \cdots
+        \end{equation}
+        such that $X_0 \in \D^{\leq 0}$ and $X_1 \in \D^{\geq 1}$.
+    \end{itemize}
+    The full subcategory $\mathcal{C} = \D^{\geq 0} \cap \D^{\leq 0}$ is called the heart of the t-structure $(\D^{\leq 0}, \D^{\geq 0})$.
+\end{definition}
+
+The heart of a t-structure allows us to get a good grasp on the ambient derived category.
+\begin{theorem}
+    $\mathcal{C} = \D^{\geq 0} \cap \D^{\leq 0}$ is an Abelian category, and any exact sequence
+    \begin{equation*}
+        0 \to X \to Y \to Z \to 0
+    \end{equation*}
+    gives rise to a distinguished triangle
+    \begin{equation*}
+        X \to Y \to Z \overset{+1}{\to} \cdots
+    \end{equation*}
+    in $\D$.
+\end{theorem}
+
+This allows us to define the functor $H^0$, which sends our derived category to its heart.
+\begin{definition}
+    The functor
+    \begin{equation*}
+        H^0: \D \to \mathcal{C} = \D^{\geq 0} \cap \D^{\leq 0}, \qquad
+        X \mapsto \tau^{\leq 0} \tau^{\geq 0}X.
+    \end{equation*}
+    Likewise, define $H^n(X) = H^0(X[n])$.
+\end{definition}
+Now let $F: \D_1 \to \D_2$ be a functor of triangulated categories. Denote by $\mathcal{C}_1$, $\mathcal{C}_2$ the hearts of the respective categories.
+\begin{definition}
+    The additive functor
+    \begin{equation*}
+        \prescript{p}{}{F}: \mathcal{C}_1 \to \mathcal{C}_2,\qquad
+        X \mapsto H^0(F(X)).
+    \end{equation*}
+    We say that $\prescript{p}{}{F}$ is left t-exact if $F(\D_1^{\geq 0}) \subseteq \D_2^{\geq 0}$, and analogously for right t-exactness.
+\end{definition}
+
+\section{Perverse Sheaves}
+
+Now we define a t-structure on the derived category of constructable sheaves. Recall that we have a Verdier duality functor $\mathbf{D}_X: D^b_{con}(X)^{op} \to D^b_{con}(X)$.
+\begin{definition}
+    For $F^\bullet \in \D^b_{con}(X)$, we have $F^\bullet \in \D^{\leq 0}_{con}(X)$ if and only if 
+    \[\dim \text{supp}( H^j(F^\bullet)) \leq -j\] for all $j \in \Z$. 
+    Likewise, we have $F^\bullet \in \D^{\geq 0}_{con}(X)$ if and only if 
+    \[\dim \text{supp}( H^j(\mathbf{D}_X F^\bullet)) \leq -j\] for all $j \in \Z$.
+\end{definition}
+
+It is not obvious that this is indeed a t-structure, so it must be stated seperately.
+\begin{theorem}
+    The pair $(\D_{con}^{\leq 0}, \D_{con}^{\geq 0})$ forms a t-structure. 
+\end{theorem}
+
+\begin{definition}
+    We call the heart of this t-structure $\text{Perv}(\C_X)$ the perverse sheaves on $X$. The functor $\mathbf{D}_X$ induces a duality of $\text{Perv}(\C_X)$.
+    Now, for any functor $F: \D^b_{con}(X) \to \D^b_{con}(Y)$,
+    denote by $\prescript{p}{}{F}$ the composition $\prescript{p}{}{H^0} \circ F$, viewed as a functor $\text{Perv}(\C_X) \to \text{Perv}(\C_Y)$.
+    In particular, we get the associated functors
+    \begin{equation*}
+        \prescript{p}{}{f^{-1}},  \prescript{p}{}{f^{!}}: 
+        \text{Perv}(\C_Y) \to \text{Perv}(\C_X),
+    \end{equation*}
+    and
+    \begin{equation*}
+        \prescript{p}{}{Rf_*}, \prescript{p}{}{Rf_!}:
+        \text{Perv}(\C_X) \to \text{Perv}(\C_Y).
+    \end{equation*}
+\end{definition}
+
+
+
+% Suppose that a space $X$ decomposes as $Z \sqcup U$ for a closed $i: Z \to X$ a proper map and $j: U \to X$ an open embedding. Notice that there always exists a natural map
+% \begin{equation}
+%     i_! \F \to i_* \F,\quad s \mapsto s,
+% \end{equation}
+% sending a compactly supported section to itself. Clearly, if $i$ is as above, this is an isomorphism for all $\F$, so that $i_! = i_*$.
+% Likewise, we have an equality $j^! = j^*$.
+% Importantly, we get an exact triangle
+% \begin{equation}
+%     i_! i^! \to \text{id} \to j_* j^* \overset{[+1]}{\to} \cdots,\qquad 
+%     j_! j^! \to \text{id} \to i_* i^* \overset{[+1]}{\to} \cdots.
+% \end{equation}
+
+% Now we can define perverse sheaves in terms of this language. Take $X = \bigsqcup_\lambda X_\lambda$ to be a Whitney stratification.
+% Denote $i_\lambda: X_\lambda \to X$ the corresponding inclusion, and $d_\lambda$ the dimension of $X_\lambda$.
+
+% \begin{definition}
+%     $\sideset{^p}{^{\leq 0}_\lambda}{\D}:= \{
+%         \F \in D^b_{const}(X_\lambda)\ |\ \sH^i(\F) = 0\ \forall i > -d_\lambda
+%     \}$,\newline
+%     $\sideset{^p}{^{\geq 0}_\lambda}{\D}:= \{
+%         \F \in D^b_{const}(X_\lambda)\ |\ \sH^i(\F) = 0\ \forall i < -d_\lambda
+%     \}$.
+% \end{definition}
+
+
+% With this in mind, we are ready to consider our first example of a perverse sheaf.
+% \begin{example}
+% Let $X = \mathbb{P}^1$, with $Z = \{p\}$ a point. Then 
+
+% \end{example}
+
+Next, we define minimal extensions of perverse sheaves. Let $X = Z \sqcup U$ with $i: Z \to X$ proper and $j: U \to X$ open.
+For $F^\bullet \in \D^b_{con}(X)$, we have natural maps
+\begin{equation*}
+    j_! F^\bullet \to Rf_* F^\bullet,\qquad s \mapsto s,
+\end{equation*}
+mapping a section to itself. If $F^\bullet$ is a perverse sheaf on $U$, we also get maps
+\begin{equation} \label{eq-minimal-ext}
+    \prescript{p}{}{j_!} F^\bullet \to \prescript{p}{}{f_*} F^\bullet.
+\end{equation}
+
+\begin{definition}
+    We denote by $\prescript{p}{}{f_{!*}} F^\bullet$ the image of \eqref{eq-minimal-ext}, and call it the minimal extension of $F^\bullet \in \text{Perv}(\C_U)$.
+\end{definition}
+In other words, we have maps
+\begin{equation}
+    \prescript{p}{}{j_!} F^\bullet \twoheadrightarrow \prescript{p}{}{j_{!*}} F^\bullet
+    \hookrightarrow \prescript{p}{}{j_*} F^\bullet.
+\end{equation}
+
+\begin{theorem}
+    Let $F^\bullet \in \text{Perv}(\C_U)$ as above. Then
+    \begin{itemize}
+        \item[(i)] $\prescript{p}{}{f_*} F^\bullet$ has no non-trivial sub-objects whose support is contained in $Z$.
+        \item[(ii)] $\prescript{p}{}{j_!} F^\bullet$ has no non-trivial quotient object whose support is contained in $Z$.
+        \item[(iii)] $\prescript{p}{}{j_{!*}} F^\bullet$ has neither sub- or quotient objects whose support is contained in $Z$.
+    \end{itemize}
+\end{theorem}
+
+Now suppose that $F^\bullet$ is a simple object in $\text{Perv}(\C_U)$.
+We claim that $\prescript{p}{}{j}_{!*} F^\bullet$ is also simple in 
+$\text{Perv}(\C_X)$. Indeed, for any subobject 
+$G^\bullet \subseteq \prescript{p}{}{j}_{!*} F^\bullet$ we may consideer the exact sequence
+\begin{equation}
+    0 \to G^\bullet \to \prescript{p}{}{j}_{!*} F^\bullet \to H^\bullet \to 0.
+\end{equation}
+Since $j^! = j^{-1}$ is exact here, we may apply it to obtain
+\begin{equation}
+    0 \to j^{-1} G^\bullet \to F^\bullet \to j^{-1} H^\bullet \to 0.
+\end{equation}
+Since $F^\bullet$ is simple, $j^{-1}G^\bullet$ or $j^{-1} H^\bullet$ is zero,
+or in other words, one of $G^\bullet$ and $H^\bullet$ is supported in $Z$.
+By the previous theorem, this makes it zero.
+
+\begin{theorem}\label{minimal-characterization}
+    $G = \prescript{p}{}{j_{!*}} F^\bullet$ is the unique perverse sheaf 
+    satisfying the conditions
+    \begin{itemize}
+        \item[(i)] $G^\bullet|_U \simeq F^\bullet$,
+        \item[(ii)] $i^{-1} G^\bullet \in 
+        \prescript{p}{}{\D}^{\leq -1}_{con}(Z)$,
+        \item[(iii)] \(i^! G^\bullet \in 
+        \prescript{p}{}{\D}^{\geq 1}_{con}(Z)\).
+    \end{itemize}
+\end{theorem}
+
+
+
+
+\section{Intersection Cohomology}
+
+Let $X$ be an irreducible complex projective variety (or an irreducible compact analytic space) of dimension $d$. We may start by defining the intersection cohomology complex in the following way.
+\begin{definition}
+    Take $U \subseteq X^{\text{reg}}$ to be a Zariski open subset of the smooth locus of $X$. For $\underline{\C}_U[d]$ the constant perverse sheaf on $U$, define $IC_X^{\bullet}$ to be a minimal extension to all of $X$.
+\end{definition}
+
+We may explicitly construct $IC_X^{\bullet}$. Fix a Whitney stratification $X = \bigsqcup_\alpha X_{\alpha}$, 
+\begin{equation}
+    X_k = \coprod_{\dim X_\alpha \leq k} X_\alpha, \quad U_k := X \smallsetminus X_{k-1},
+\end{equation}
+with each $X_k \smallsetminus X_{k-1}$ a smooth $k$-dimensional complex manifold. We have a family of maps $j_k: U_k \hookrightarrow U_{k-1}$, for $k=1,\dots, d$. Altogether, this fits into
+\begin{equation}
+    \emptyset \hookrightarrow U_d \hookrightarrow U_{d-1} \hookrightarrow \cdots
+    \hookrightarrow U_1 \hookrightarrow X.
+\end{equation}
+
+\begin{theorem} \label{ic-structure}
+    \(IC_X^{\bullet}\) is quasi-isomorphic to the complex
+    \begin{equation}
+        \prescript{p}{}{j_{!*}}(\C_U[d_X]) \simeq 
+        \paren{\tau^{\leq -1}Rj_{1*}} \circ \paren{\tau^{\leq -2}Rj_{2*}} \circ \cdots \paren{\tau^{\leq -d}Rj_{d*}} \paren{\underline{\C}_U[d]}.
+    \end{equation}
+\end{theorem}
+\begin{proof}
+Suppose that $F^\bullet$ is a perverse sheaf on $U_k$ whose restriction to 
+any strata $X_\alpha \subseteq U_k$ has locally constant $\sH^i$.
+We show that $G^\bullet := \tau^{\leq -k} Rj_{k*}(F^\bullet)$ satisfies the
+unique characterization of a minimal extension from Theorem 
+\ref{minimal-characterization}. First, note that $U_k$ consists of 
+strata of dimension $\geq k$, so that \(\sH^r(F^\bullet)  = 0\) for 
+\(r > -k\). In particular,
+\begin{equation*}
+    \left[\tau^{\leq -k} Rj_{k*} F^\bullet\right]|_{U_k} \simeq F^\bullet,
+\end{equation*}
+so that what we have is indeed an extension of $F^\bullet$, satisfying (i).
+Next, set \(Z := U_{k-1} \smallsetminus U_k = 
+\bigsqcup_{\dim X_\alpha = k-1} X_\alpha\). Denote by $i: Z \to U_k$ the
+associated closde embedding. Then $i^{-1} G^\bullet$ has locally constant 
+cohomology sheaves on each $X_\alpha \subseteq Z$, so that 
+\(\sH^r(i^{-1} G^\bullet) = 0\) for \(r > -k\). This implies that 
+\(i^{-1} G^\bullet \in \prescript{p}{}{\D}_{con}^{\leq -1},\) thus satisfying
+condition (ii). Finally, consider the triangle
+\begin{equation}
+    G \to Rj_{k*} F^\bullet \to \tau^{\geq -k+1} Rj_{k*} F^\bullet
+    \overset{+1}{\to} \cdots
+\end{equation}
+Applying $i^!$, we note that the middle vanishes. This gives us isomorphisms
+\begin{equation*}
+    i^! G^\bullet \simeq i^! (\tau^{\geq -k+1} Rj_{k*} F^\bullet)[-1]
+\end{equation*}
+so that $\sH^r(i^! G^\bullet) = 0$ for \(r < -k\). But since \(i^! G\) has locally
+constant cohomology on \(X_\alpha \subseteq Z\), we get
+\(i^! G \in \prescript{p}{}{\D}_{con}^{\geq 1}(Z)\), proving (iii).
+\end{proof}
+
+Importantly, the intersection cohomology complex is self-dual in the way we expect of perverse sheaves.
+
+\begin{theorem}\label{canonical-morphisms}
+    \(IC_X^{\bullet} \simeq \mathbb{D}_X (IC_X^{\bullet}) \). Furthermore, there exist canonical morphisms
+    \begin{equation}
+        \underline{\C}_X \to IC_X^{\bullet}[-d] \to \omega_X^\bullet[-2d].
+    \end{equation}
+\end{theorem}
+\begin{proof}
+We have an isomorphism in the derived category of constructible sheaves
+from above
+\begin{equation}
+    \tau^{\leq -d}\ \prescript{p}{}{j}_{!*} \underline{\C}_X[d] \simeq
+     Rj_{1*} \circ \cdots \circ Rj_{d*}
+     \paren{\underline{\C}_X[d]} \simeq (j_* \C)[d].
+\end{equation}
+This is none other than the intersection complex of $X$, and we see that it admits a canonical map from $\underline{\C}_X$. The second map in the composition comes from taking the Verdier dual,
+\(IC_X^\bullet[d] \to \omega_X^\bullet \).
+\end{proof}
+
+With the intersection complex in place, we are ready to define intersection cohomology.
+\begin{definition}
+    For $i \in \Z$, we define
+    \begin{equation}
+        IH^i(X) = H^i\paren{R\Gamma\paren{X, IC_X^\bullet[-d]}},
+    \end{equation}
+    \begin{equation}
+        IH_c^i(X) = H^i\paren{R\Gamma_c\paren{X, IC_X^\bullet[-d]}}.
+    \end{equation}
+\end{definition}
+
+Importantly, the intersection cohomology of $X$ satisfies Poincare duality.
+\begin{theorem}
+    Let $X$ be irreducible of dimension $d$. Then
+    \begin{equation}
+        IH^i(X) \simeq \left[IH_c^{2d-i}(X)\right]^*.
+    \end{equation}
+\end{theorem}
+\begin{proof}
+Let $a_X: X \to \{p\}$ be the unique map to a point. We have 
+\begin{equation}
+    R\Hom_\C(Ra_{X!} IC^\bullet, \C) \simeq 
+    Ra_{X*} R\Hom_{\C_X}(IC_X^\bullet, \omega_X^\bullet).
+\end{equation}
+by Verdier duality. But \(IC_X^\bullet\) is self-dual, so that
+\begin{equation*}
+    R\Hom_{\C_X}(IC_X^\bullet, \omega_X^\bullet) = 
+    \mathbf{D}_X(IC_X^\bullet) = IC_X^\bullet.
+\end{equation*}
+Thus we get an isomorphism
+\begin{equation}
+    \left[R \Gamma_c(X, IC_X^\bullet)\right]^* \simeq 
+    R\Gamma(X, IC_X^\bullet).
+\end{equation}
+
+
+\end{proof}
+
+\begin{example}
+Let $X$ be an irreducible complex projective variety with isolated singular points $p_1,\dots, p_k$. Then it suffices to consider the stratification
+\[ X = \{p_1,\dots,p_k\} \sqcup X^{\text{reg}}. \]
+Then we have \(X_0 = \dots = X_{d-1} = \{p_1,\dots, p_k\}\), and \(X_d = X\). Thus, we get the inclusions of complex manifolds
+\[ \emptyset \to U_d = X^{\text{reg}} = U_1 \overset{j_1}{\to} X.\]
+The only interesting map in this stratification is $j_1$, the inclusion of the smooth locus. In particular, by Theorem \ref{ic-structure},
+\[ IC_X^\bullet \simeq \tau^{\leq -1}\paren{Rj_{1*} \underline{\C}_{U_1}}. \] 
+Now, associated to truncation is the exact couple
+\begin{equation}
+    IC_X^\bullet[-d] \to Rj_{1*} \underline{\C}_{U_1} \to 
+    \tau^{\geq d}\paren{Rj_{1*} \underline{\C}_{U_1}} \overset{+1}{\to} \cdots
+\end{equation}
+But now we can apply $R\Gamma$ and take cohomology. For $0 \leq i < d$, we have
+\( IH^i(X) = H^i(X, Rj_{1*}\overline{\C}_{U_1}) = H^i(X^{\text{reg}}, \C). \) For $i=d$, we do not get a clear vanishing on the right, but the map
+\(IH^d(X) \to H^d(X^{\text{reg}}, \C)\) is injective. To analyze this case more carefully, consider the canonical morphism
+\( \underline{\C}_X \to IC_X^\bullet[-d] \)
+guarenteed by Theorem \ref{canonical-morphisms}.
+
+We may associate to this natural map a new exact couple
+\begin{equation}
+    \underline{\C}_X \to IC_X^\bullet[-d] \to F^\bullet \overset{+1}{\to} \cdots
+\end{equation}
+Here \(F^\bullet\) is a constructable sheaf supported only on the zero-dimensional closed subset $\{p_1, \dots, p_k\} = X_0$. In particular, \(H^i(F^\bullet) = 0\) for all $i \geq d$. Thus, we get \(IH^i(X) = H^i(X, \C)\) for $d < i \leq 2d$. After $i = 2d$, the cohomology of $\underline{\C}_X$ vanishes, and with it $IH^i(X)$. Summarizing,
+\begin{equation}
+    IH^i(X) = \begin{cases}
+        H^i(X^{\text{reg}}, \C) & : 0 \leq i < d \\
+        \text{im}(H^i(X, \C) \to H^i(X^{\text{reg}}, \C)) & : i = d \\
+        H^i(X, \C) & : d < i \leq 2d \\
+        0 & : \text{otherwise}
+    \end{cases}
+\end{equation}
+\qed
+\end{example}
+
+
+
+
+\end{document}

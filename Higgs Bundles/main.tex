@@ -1,0 +1,273 @@
+\documentclass[letterpaper, 12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{quiver}
+\usepackage{mathrsfs}
+\usepackage{array}
+\usepackage{amssymb}
+\usepackage{mathabx}
+\usepackage{changepage}
+%\geometry{legalpaper, portrait, margin=1in}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\sph}{\mathbb{S}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\End}{\text{End}}
+\newcommand{\Aut}{\text{Aut}}
+\newcommand{\Hom}{\text{Hom}}
+\newcommand{\id}{\text{id}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\quat}{\mathbb{H}}
+\newcommand{\liegl}{\mathfrak{gl}}
+\newcommand{\p}{\mathfrak{p}}
+\newcommand{\m}{\mathfrak{m}}
+\newcommand{\SL}{\text{SL}}
+\newcommand{\GL}{\text{GL}}
+\newcommand{\PSL}{\text{PSL}}
+\newcommand{\PGL}{\text{PGL}}
+\newcommand{\SU}{\text{SU}}
+\newcommand{\SO}{\text{SO}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\lb}{\mathcal{O}}
+
+
+
+\NewDocumentCommand{\paren}{m}{%
+  \left(%
+    {#1}%
+  \right)%
+}
+
+\DeclareMathOperator{\im}{\text{im}}
+\DeclareMathOperator{\coker}{\text{coker}}
+\DeclareMathOperator{\rk}{\text{rk}}
+\DeclareMathOperator{\Frac}{\text{Frac}}
+\DeclareMathOperator{\Ann}{\text{Ann}}
+\DeclareMathOperator{\Supp}{\text{Supp}}
+\DeclareMathOperator{\colim}{\text{colim}}
+\DeclareMathOperator{\Spec}{\text{Spec}}
+\DeclareMathOperator{\Proj}{\text{Proj}}
+
+\newtheorem{theorem}{Theorem}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\newcommand{\E}{\mathcal{E}}
+\newcommand{\smooth}{C^\infty}
+\newcommand{\del}{\partial}
+\newcommand{\delbar}{\overline{\del}}
+
+
+\title{Higgs Bundles}
+\date{November 20, 2024}
+
+%\addtolength{\topmargin}{-0.5in}
+
+\begin{document}
+
+\maketitle
+
+These are notes I wrote up for my own comprehension while reading Simpson's paper.
+Let $X$ be a compact K\"ahler manifold with K\"ahler metric \(\omega\). We let $E$ be a vector bundle (either smooth or holomorphic, depending on the context) with associated sheaf of sections $\E$.
+
+\begin{definition}
+    A Higgs bundle is a holomorphic vector bundle $E$ on $X$, equipped with a holomorphic map
+    \begin{equation}
+        \theta: \E \to \E \otimes \Omega_X^1, \qquad \theta \wedge \theta = 0 \in \End(E) \otimes \Omega_X^2.
+    \end{equation}
+\end{definition}
+
+We may write \(\theta\) in local coordinates \(z_1,\dots, z_n\) as \(\sum_i \theta_i dz_i\), for some \(\theta_i\) holomorphic endomorphisms of $E$. Observe that the condition that \(\theta \wedge \theta = 0\) grants us that
+\begin{equation}
+    \theta_i \theta_j dz_i \wedge dz_j - \theta_j \theta_i dz_i \wedge dz_j = 0,
+\end{equation}
+so that the matrices \(\theta_i, \theta_j\) commute for every $i, j$.
+
+Alternatively, we may think of $E$ as a $\smooth$-bundle equipped with a first-order operator. The holomorphic structure of $E$ comes from an operator
+\( \delbar: \E \to \E \otimes \mathcal{A}^{0,1}_X \), annihilating precisely the holomorphic sections of $E$. With this perspective, we may think of $\theta$ as a similar operator
+\begin{equation}
+    \theta: \E \to \E \otimes \mathcal{A}^{1,0}_X.
+\end{equation}
+we may combine our two operators to form $D'' := \theta + \delbar$. Conversely, an operator $D''$ as above defines a Higgs bundle precisely when it satisfies the two conditions
+\begin{equation}
+    D''(fs) = \delbar(f)s + fD''(s),\qquad (D'')^2 = 0.
+\end{equation}
+Indeed, the integrability condition gives us a holomorphic structure via $\delbar^2 = 0$, forces $\theta$ to be holomorphic by $\delbar(\theta) = 0$, and yields $\theta \wedge \theta = 0$, as needed.
+
+Next, let us establish the correspondance between flat bundles and Higgs bundles. Let $V$ be a flat bundle with sheaf of sections $\mathcal{V}$. A metric \(K\) on $E$ or $V$ is a positive definite Hermitian form \( (\cdot, \cdot)_K\) on every fiber, varying smoothly over the base. To globalize this construction, we note that a Hermitian form is the same data as an isomorphism
+\begin{equation}
+    K: E \to \overline{E}^\vee,\qquad s \mapsto K(s, -).
+\end{equation}
+
+
+\begin{theorem} \label{D''-D-correspondance}
+    $K$ defines a correspondance between vector bundles with connection $(V, D)$ and vector bundles with an endomorphism-valued one-form $(E, \theta)$.
+\end{theorem}
+\begin{proof}
+    Given a Higgs bundle $(E, D'')$ with Hermitian metric $K$, define the following three analogous operators: \( \del_K\) is the unique operator such that $\delbar + \del_K$ preserves $K$:
+\begin{equation} \label{eq-preserve-metric}
+    (\delbar e, f) + (e, \del_K f) = \delbar(e, f),
+\end{equation}
+ $\bar\theta_K$ is the $K$-adjoint to $\theta$:
+ \begin{equation}
+     (\theta e, f) = (e, \bar\theta_K f),
+ \end{equation}
+ and \(D_K' = \del_K + \bar\theta_K\). Finally, set \(D_K = D_K' + D''\); we claim that $D_K$ is a connection. Indeed,
+ \begin{align*}
+     D_K(ae) &= D_K'(ae) + D''(ae) \\
+     &= \del_K(ae) + \bar\theta_K(ae) + \delbar(a)e + aD''(e) \\
+     &= \del(a)e + a\del_K(e) + a\bar\theta_K(e) + \delbar(a)e + aD''(e) \\
+     &= d(a)e + aD'_K(e) + aD''(e) \\
+     &= d(a)e + aD_K(e).
+ \end{align*}
+In particular, we get a flat structure if and only if the connection is integrable.
+
+Conversely, let $(V, D)$ be a flat bundle with metric $K$. Decomposing $D$ into $d' + d''$ its $(1,0)$ and $(0,1)$ parts respectively, we may define two new operators $\delta''$ and $\delta'$ such that $d' + \delta''$ and $\delta' + d''$ preserve $K$ in the sense of \eqref{eq-preserve-metric}. Now define our Higgs structure by
+\begin{equation}
+    \del = (d' + \delta') / 2,\ \ \delbar = (d'' + \delta'') / 2,\ \ 
+    \theta = (d' - \delta') / 2,\ \ \bar\theta = (d'' - \delta'') / 2.
+\end{equation}
+We may describe this structure locally by fixing a flat frame $\{v_i\}$ on $\mathcal{V}$. Define $h_{ij} := (v_i, v_j)_K$, and express $\theta$ as
+\begin{equation}
+    \theta = \theta^{ij}_k \otimes v_i \otimes v_j^* \otimes dz_k.
+\end{equation}
+Then contraction with $v_m$ allows us to solve for the coefficients of $\theta$:
+\begin{equation}
+    \frac{\del h_{jm}}{\del z_k} = \sum_i \theta^{ij}_k h_{im}.
+\end{equation}
+Set $D''_K = \delbar + \theta$. Then we have
+\begin{equation}
+    D''_K(av) = \delbar(a)v + aD''(v),
+\end{equation}
+so $D''_K$ is Leibniz, and defines a Higgs bundle if and only if it is integrable. To see that this is a correspondance, it is helpful to consider the associated operator
+\begin{equation}
+    D_K^c = D_K'' - D_K' = \delta'' - \delta'.
+\end{equation}
+In particular, one notes that $D_K'' = (D + D_K^c) / 2$.
+\end{proof}
+
+Now suppose that $f: X \to Y$ were a morphism of complex manifolds. Then if $E$ is a Higgs bundle on $Y$ with metric $K$, $f^* E$ is a Higgs bundle on $X$, $f^* K$ is a metric, and $f^* D_K = D_{f^* K}$. One can do analogously for flat bundles on $Y$.
+
+If $E$ and $F$ are Higgs bundles, we may define a Higgs bundle structure on their tensor product by the Leibniz rule:
+\begin{equation}
+    D''(e \otimes f) = D''e \otimes f + e \otimes D''f.
+\end{equation}
+Explicitly, the Higgs structure on $E \otimes F$ has associated one-form $\theta_E \otimes 1 + 1 \otimes \theta_F$. Once again, one can do the same procedure to put a flat connection on a tensor product of flat bundles. Moreover, if $J$ and $K$ are metrics on $E$ and $F$ which relate the Higgs operators $D''$ with the connections $D$, we claim that the metric on $E \otimes F$ relating the induced operator with the induced flat connection is
+\begin{equation}
+    J \otimes K: (e \otimes f, e' \otimes f') \mapsto (e, e')_J \cdot (f, f')_K.
+\end{equation}
+Indeed, write $D'' = \delbar + \theta$, and define a $D''_C = \delbar - \theta$. Then $D'_{E \otimes F}$ is defined by the equation
+\begin{equation}
+    (D'_{E \otimes F}(e \otimes f), e' \otimes f') + (e \otimes f, D''_C(e' \otimes f')) = \delbar(e \otimes f, e' \otimes f').
+\end{equation}
+Now observe that the operator $D_{J, K}' = D_J' \otimes 1 + 1 \otimes D_K'$ also satisfies this equation, and $D = D'' + D_{J \otimes K}'$, as needed.
+
+We may also define a Higgs structure on the dual bundle $E^\vee$. If $D''$ is a Higgs operator on $E$, define $D''$ on $E^\vee$ by
+\begin{equation}
+    D''(\lambda)(e) + \lambda(D''e) = \delbar(\lambda e).
+\end{equation}
+In particular, the associated endomorphism-valued one-form on $E^\vee$ is $-\theta^T$. This insures that $\mathcal{O}_X \to E \otimes E^\vee \to \mathcal{O}_X$ are morphisms of Higgs bundles. We may analogously define a flat connection on the dual of a flat bundle $V$, and force $\C \to V \otimes V^\vee \to \C$ to be morphisms of flat bundles.
+
+\begin{theorem}[K\"ahler Identities] \label{kahler-identities}
+    If $(E, D'', K)$ is a Higgs bundle, $D_K'$ is the unique operator satisfying
+    \begin{equation}
+        (D_K')^* = -i[\Lambda, D''],\qquad (D'')^* = -i[\Lambda, D_K'].
+    \end{equation}
+\end{theorem}
+
+Recall from Theorem \ref{D''-D-correspondance} that while a Higgs bundle always defines a connection and a flat bundle always defines an operator $D''$, they may fail to satisfy the integrability condition $(D'')^2 = D^2 = 0$. We may measure this failure with and endomorphism valued two-form.
+\begin{definition}
+    The curvature of $(E, D'', K)$ is the form $F_K = (D_K)^2 = D_K' D'' + D'' D_K'$.
+\end{definition}
+This equality follows from the fact that $(D_K')^2 = 0$. Moreover, for the same reason, $F_K$ satisfies the Bianchi identities
+\begin{equation} \label{eq-bianchi-curvature}
+    D'' F_K = D_K' F_K = 0.
+\end{equation}
+For flat bundles, we have the analogous definition.
+\begin{definition}
+    The pseudocurvature of $(V, D, K)$ is the form
+    \[G_K = (D_K'')^2 = (DD_K^c + D_K^c D) / 4.\]
+\end{definition}
+As before, $(D_K^c)^2 = 0$, giving us the Bianchi identities
+\begin{equation} \label{eq-bianchi-pseudocurvature}
+    DG_K = D_K^c G_K = 0.
+\end{equation}
+
+Thus, we see that our correspondance depends on the choice of a metric $K$ satisfying the equations $F_K = G_K = 0$. As there may be many such choices, we need a canonical one.
+
+\begin{definition}
+    For $E$ a Higgs bundle, a metric $K$ is called Hermitian-Yang-Mills if for for some $\lambda$ depending only on the slope of $E$ we have $\Lambda F_K = \lambda\ \text{Id}$. For $V$ a flat bundle, a metric $K$ is harmonic if $\Lambda G_K = 0$.
+\end{definition}
+
+\begin{theorem}[Siu, Sampson, Corlette, Deligne]
+    If $K$ is a harmonic metric, then $G_K = 0$ and $V$ comes from a Higgs bundle.
+\end{theorem}
+
+With this in mind, we refer to as a harmonic metric a metric $K$ on a Higgs bundle for which $F_K = 0$.
+\begin{definition}
+    A harmonic bundle $(E, K)$ is a $\smooth$-bundle equipped with a Higgs structure and a flat structure related by a harmonic metric $K$.
+\end{definition}
+As before, harmonicity respects pullbacks, tensors, and duals.
+
+\begin{definition}
+    We say that a Higgs bundle $E$ is stable if for every subsheaf $M \subseteq E$ preserved by $\theta$ with $0 < \rk M < \rk E$,
+    \begin{equation*}
+        \frac{\deg M}{\rk M} < \frac{\deg E}{\rk E}.
+    \end{equation*}
+    When this inequality fails to be sharp, we say that $E$ is semistable. When $E$ is a direct sum of stable Higgs bundles with the same slope, we say that $E$ is polystable.
+\end{definition}
+
+\begin{theorem} Simple objects in the categories of Higgs bundles and flat bundles are related in the following way:
+    \begin{itemize}
+        \item[(1)]
+        A flat bundle $V$ admits a harmonic metric if and only if it is semi-simple.
+        \item[(2)]
+        A Higgs bundle $E$ admits a Hermitian-Yang-Mills metric if and only if it is polystable. Such a metric is harmonic if and only if 
+        \begin{equation} \label{eq-ch1-ch2-vanishing}
+            \text{ch}_1(E).[\omega]^{n-1} = \text{ch}_2(E).[\omega]^{n-2} = 0.
+        \end{equation}
+    \end{itemize}
+\end{theorem}
+
+For $V$ a flat bundle, we may consider $H^0_{\text{dR}}(X, V)$ the space of sections $v$ with $Dv = 0$. Analogously, for $E$ a Higgs bundle, we may consider $H^0_{\text{Dol}}(X, E)$ the space of holomorphic sections $e$ with $\theta e = 0$, or equivalently the space of smooth sections $v$ with $D'' v = 0$.
+\begin{theorem} \label{dol-dr-global-sections}
+    Suppose that $E$ is a harmonic bundle. Then $H^0_{\text{Dol}}(X, E) \simeq H^0_{\text{dR}}(X, E)$.
+\end{theorem}
+\begin{proof}
+Suppose that $e$ is a section with $D'' e = 0$. Then by Theorem \ref{kahler-identities} and the anti-commutativity of $D'$ with $D''$,
+\begin{equation*}
+    (D')^* D' e = i \Lambda D'' D' e = -i\Lambda D' D'' e = 0.
+\end{equation*}
+Thus
+\begin{equation*}
+    ||D' e||^2 = \int_X (D' e, D' e) = \int_X ((D')^* D' e, e) = 0.
+\end{equation*}
+In particular, $De = D'e + D''e = 0$. The converse follows by making the same argument with $(D^c)^* D^c$.
+\end{proof}
+
+\begin{theorem}[Non-Abelian Hodge Theorem I]
+    The categories of semi-simple flat bundles on $X$, polystable Higgs bundles on $X$ satisfying \eqref{eq-ch1-ch2-vanishing}, and harmonic bundles on $X$ are all categorically equivalent.
+\end{theorem}
+\begin{proof}
+Apply Theorem \ref{dol-dr-global-sections} to get an isomorphism of Hom sets
+\begin{equation*}
+    \Hom_{\text{dR}}(E, F) = H^0_{\text{dR}}(X, E^* \otimes F) \simeq 
+    H^0_{\text{Dol}}(X, E^* \otimes F) = \Hom_{\text{Dol}}(E, F).
+\end{equation*}
+\end{proof}
+
+
+\end{document}
