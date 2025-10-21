@@ -1,21 +1,28 @@
-\documentclass[letterpaper, 12pt]{article}
+\documentclass[12pt]{amsart}
 \usepackage[margin=1in]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage{amsfonts}
 \usepackage{amsthm}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{caption}
 \usepackage{graphicx}
 \usepackage{enumitem}
 \usepackage{quiver}
 \usepackage{mathrsfs}
-\usepackage{array}
 \usepackage{amssymb}
-\usepackage{mathabx}
-\usepackage{changepage}
-%\geometry{legalpaper, portrait, margin=1in}
 \usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=green,      
+    urlcolor=cyan,
+    citecolor=magenta,
+    pdftitle={Perverse Sheaves, Intersection Cohomology, and Mixed Hodge Modules},
+    pdfpagemode=FullScreen,
+}
+\urlstyle{same}
 
 
 \newcommand{\R}{\mathbb{R}}
@@ -29,59 +36,42 @@
 \newcommand{\Aut}{\text{Aut}}
 \newcommand{\Hom}{\text{Hom}}
 \newcommand{\id}{\text{id}}
-\newcommand{\M}{\mathcal{M}}
-\newcommand{\quat}{\mathbb{H}}
-\newcommand{\liegl}{\mathfrak{gl}}
-\newcommand{\p}{\mathfrak{p}}
-\newcommand{\m}{\mathfrak{m}}
-\newcommand{\SL}{\text{SL}}
-\newcommand{\GL}{\text{GL}}
-\newcommand{\PSL}{\text{PSL}}
-\newcommand{\PGL}{\text{PGL}}
-\newcommand{\SU}{\text{SU}}
-\newcommand{\SO}{\text{SO}}
-\newcommand{\tr}{\text{tr}}
-\newcommand{\lb}{\mathcal{O}}
-
-\NewDocumentCommand{\paren}{m}{%
-  \left(%
-    {#1}%
-  \right)%
-}
 
 \DeclareMathOperator{\im}{\text{im}}
 \DeclareMathOperator{\coker}{\text{coker}}
-\DeclareMathOperator{\rk}{\text{rk}}
-\DeclareMathOperator{\Frac}{\text{Frac}}
-\DeclareMathOperator{\Ann}{\text{Ann}}
-\DeclareMathOperator{\Supp}{\text{Supp}}
-\DeclareMathOperator{\colim}{\text{colim}}
-\DeclareMathOperator{\Spec}{\text{Spec}}
-\DeclareMathOperator{\Proj}{\text{Proj}}
 \DeclareMathOperator{\D}{\mathcal{D}}
 
-\newtheorem{theorem}{Theorem}
-
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}
-
-\theoremstyle{remark}
-\newtheorem{example}{Example}
 
 \newcommand{\F}{\mathscr{F}}
 \newcommand{\sH}{\mathscr{H}}
 
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\numberwithin{equation}{section}
+
+
+
 
 \title{Perverse Sheaves and Intersection Cohomology}
-\date{November 17, 2024}
-
-%\addtolength{\topmargin}{-0.5in}
+\author{Edward Varvak}
 
 \begin{document}
 
 \maketitle
 
-These are notes I wrote up for my own comprehension while reading the text of Hotta--Takeuchi--Tanisaki.
+These are notes I wrote up for my own comprehension while reading the text of
+Hotta--Takeuchi--Tanisaki \cite{HTT}.
 
 \section{T-Structures}
 \begin{definition}
@@ -237,7 +227,7 @@ Since $F^\bullet$ is simple, $j^{-1}G^\bullet$ or $j^{-1} H^\bullet$ is zero,
 or in other words, one of $G^\bullet$ and $H^\bullet$ is supported in $Z$.
 By the previous theorem, this makes it zero.
 
-\begin{theorem}\label{minimal-characterization}
+\begin{theorem} \label{minimal-characterization}
     $G = \prescript{p}{}{j_{!*}} F^\bullet$ is the unique perverse sheaf 
     satisfying the conditions
     \begin{itemize}
@@ -273,7 +263,9 @@ with each $X_k \smallsetminus X_{k-1}$ a smooth $k$-dimensional complex manifold
     \(IC_X^{\bullet}\) is quasi-isomorphic to the complex
     \begin{equation}
         \prescript{p}{}{j_{!*}}(\C_U[d_X]) \simeq 
-        \paren{\tau^{\leq -1}Rj_{1*}} \circ \paren{\tau^{\leq -2}Rj_{2*}} \circ \cdots \paren{\tau^{\leq -d}Rj_{d*}} \paren{\underline{\C}_U[d]}.
+        \left(\tau^{\leq -1}Rj_{1*}\right) \circ \left(\tau^{\leq -2}Rj_{2*}\right)
+        \circ \cdots \circ \left(\tau^{\leq -d}Rj_{d*}\right)
+        \left(\underline{\C}_U[d]\right).
     \end{equation}
 \end{theorem}
 \begin{proof}
@@ -281,7 +273,7 @@ Suppose that $F^\bullet$ is a perverse sheaf on $U_k$ whose restriction to
 any strata $X_\alpha \subseteq U_k$ has locally constant $\sH^i$.
 We show that $G^\bullet := \tau^{\leq -k} Rj_{k*}(F^\bullet)$ satisfies the
 unique characterization of a minimal extension from Theorem 
-\ref{minimal-characterization}. First, note that $U_k$ consists of 
+\Cref{minimal-characterization}. First, note that $U_k$ consists of 
 strata of dimension $\geq k$, so that \(\sH^r(F^\bullet)  = 0\) for 
 \(r > -k\). In particular,
 \begin{equation*}
@@ -322,7 +314,7 @@ from above
 \begin{equation}
     \tau^{\leq -d}\ \prescript{p}{}{j}_{!*} \underline{\C}_X[d] \simeq
      Rj_{1*} \circ \cdots \circ Rj_{d*}
-     \paren{\underline{\C}_X[d]} \simeq (j_* \C)[d].
+     \left(\underline{\C}_X[d]\right) \simeq (j_* \C)[d].
 \end{equation}
 This is none other than the intersection complex of $X$, and we see that it admits a canonical map from $\underline{\C}_X$. The second map in the composition comes from taking the Verdier dual,
 \(IC_X^\bullet[d] \to \omega_X^\bullet \).
@@ -332,10 +324,10 @@ With the intersection complex in place, we are ready to define intersection coho
 \begin{definition}
     For $i \in \Z$, we define
     \begin{equation}
-        IH^i(X) = H^i\paren{R\Gamma\paren{X, IC_X^\bullet[-d]}},
+        IH^i(X) = H^i\left(R\Gamma\left(X, IC_X^\bullet[-d]\right)\right),
     \end{equation}
     \begin{equation}
-        IH_c^i(X) = H^i\paren{R\Gamma_c\paren{X, IC_X^\bullet[-d]}}.
+        IH_c^i(X) = H^i\left(R\Gamma_c\left(X, IC_X^\bullet[-d]\right)\right).
     \end{equation}
 \end{definition}
 
@@ -372,17 +364,17 @@ Let $X$ be an irreducible complex projective variety with isolated singular poin
 Then we have \(X_0 = \dots = X_{d-1} = \{p_1,\dots, p_k\}\), and \(X_d = X\). Thus, we get the inclusions of complex manifolds
 \[ \emptyset \to U_d = X^{\text{reg}} = U_1 \overset{j_1}{\to} X.\]
 The only interesting map in this stratification is $j_1$, the inclusion of the smooth locus. In particular, by Theorem \ref{ic-structure},
-\[ IC_X^\bullet \simeq \tau^{\leq -1}\paren{Rj_{1*} \underline{\C}_{U_1}}. \] 
+\[ IC_X^\bullet \simeq \tau^{\leq -1}\left(Rj_{1*} \underline{\C}_{U_1}\right). \] 
 Now, associated to truncation is the exact couple
 \begin{equation}
     IC_X^\bullet[-d] \to Rj_{1*} \underline{\C}_{U_1} \to 
-    \tau^{\geq d}\paren{Rj_{1*} \underline{\C}_{U_1}} \overset{+1}{\to} \cdots
+    \tau^{\geq d}\left(Rj_{1*} \underline{\C}_{U_1}\right) \overset{+1}{\to} \cdots
 \end{equation}
 But now we can apply $R\Gamma$ and take cohomology. For $0 \leq i < d$, we have
 \( IH^i(X) = H^i(X, Rj_{1*}\overline{\C}_{U_1}) = H^i(X^{\text{reg}}, \C). \) For $i=d$, we do not get a clear vanishing on the right, but the map
 \(IH^d(X) \to H^d(X^{\text{reg}}, \C)\) is injective. To analyze this case more carefully, consider the canonical morphism
 \( \underline{\C}_X \to IC_X^\bullet[-d] \)
-guarenteed by Theorem \ref{canonical-morphisms}.
+guarenteed by Theorem \Cref{canonical-morphisms}.
 
 We may associate to this natural map a new exact couple
 \begin{equation}
@@ -401,6 +393,8 @@ Here \(F^\bullet\) is a constructable sheaf supported only on the zero-dimension
 \end{example}
 
 
+\bibliographystyle{alpha}
+\bibliography{refs}
 
 
 \end{document}
