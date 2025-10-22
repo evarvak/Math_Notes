@@ -44,6 +44,7 @@
 
 \newcommand{\F}{\mathscr{F}}
 \newcommand{\sH}{\mathscr{H}}
+\newcommand{\pH}{\prescript{p}{}{\mathcal{H}}}
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{proposition}[theorem]{Proposition}
@@ -400,8 +401,61 @@ mixed Hodge modules (\cite{saito88-HM}, \cite{saito90-MHM}). For a quick summary
 this theory, refer to \cite[\S 2.1]{deC-Rap-Sac21}. Throughout these computations,
 we loosely follow \cite[\S 2]{deC-Mig09}.
 
+Let \(X\) be a variety over \(\C\). Saito \cite{saito90-MHM} defines a category
+\(\D^b \mathrm{MHM}(X)\) of complexes of mixed Hodge modules, equipped with
+Hodge-theoretic weight formalism and a natural morphism
+\(\mathrm{rat}: \D^b \mathrm{MHM}(X) \to \D^b_{con}(X, \Q)\). This category 
+has two t-structures: the one corresponding to the standard t-structure on 
+\(\D^b_{con}(X, \Q)\), and the perverse t-structure. This sets a heart:
+if \(K \in \mathrm{MHM}(X)\), then \(\mathrm{rat}(K) \in \mathrm{Perv}(X, \Q)\).
+When restricted to a suitable dense open set, the objects in \(\mathrm{MHM}(X)\) 
+become admissable variations of polarizable mixed Hodge structures.
+
+More importantly, for \(f: X \to B\) a proper morphism of varieties and 
+\(K \in MHM(X)\), if the derived pushforwards (with respect to the standard t-structures)
+\(R^i f_* K\), \(R^i f_! K\) are perverse sheaves, they may be endowed with the 
+structure of an object in \(\D^b \mathrm{MHM}(X)\). More concretely, 
+we have the following theorem.
+
+\begin{theorem}[Decomposition Theorem]
+    Let \(K \in \mathrm{MHM}(X)\) be of pure weight \(w\). Then there is a splitting 
+    of \(Rf_* K\) with respect to the perverse t-structure 
+    \begin{equation}
+        Rf_* K = \bigoplus_{k} \pH^k(Rf_* K)[-k],
+    \end{equation}
+    where each summand \(\pH^k(Rf_* K)[-k]\) is pure and semisimple in 
+    \(\D^b \mathrm{MHM}(X)\) of weight \(w-k\). (Should there be no \([-k]\) shift?) 
+    Moreover, if \(\eta\) is an ample class on \(X\), there is a relative Hard 
+    Lefschetz isomorphism
+    \begin{equation}
+        \eta^i: \pH^{-i}(Rf_* K) \simeq \pH^i(Rf_* K).
+    \end{equation}
+\end{theorem}
+
+\subsection{Fibrations of smooth algebraic varieties.}
+In this section, we focus on the case of \(f: X \to B\), where \(f\) is proper with 
+positive-dimensional fibers, and \(X\) and \(B\) are smooth. 
+
+\begin{example}
+Let \(X\) be a projective surface and \(B\) a curve. Denote by \(B^\circ\) the locus 
+of regular values of \(f\). Then \(R^1 f_* \Q_X|_{B^\circ}\) is a weight one variation 
+of Hodge structures.
+
+As a Hodge module, \(\Q_X(0)\) is pure of weight 0. Over \(B^\circ\), its pushforward 
+decomposes as 
+\begin{equation}
+    \Q_{B^\circ}(0) \oplus R^1 f_* \Q_X|_{B^\circ}[-1] \oplus \Q_{B^\circ}(-1)[-2].
+\end{equation}
+Now let \(\Delta = B \smallsetminus B^\circ\). Suppose further that the singular fibers 
+of \(f\) are irreducible. Over \(p \in \Delta\), we get 
+\begin{equation}
+    Rf_* \Q_X|_p = H^0(X_p, \Q)[2] \oplus H^1(X_p, \Q)[1] \oplus H^2(X_p, \Q)[0].
+\end{equation}
 
 
+
+
+\end{example}
 
 
 
