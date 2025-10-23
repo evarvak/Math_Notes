@@ -44,6 +44,8 @@
 
 \newcommand{\F}{\mathscr{F}}
 \newcommand{\sH}{\mathscr{H}}
+\newcommand{\ol}{\overline}
+\newcommand{\ul}{\underline}
 \newcommand{\pH}{\prescript{p}{}{\mathcal{H}}}
 
 \newtheorem{theorem}{Theorem}[section]
@@ -438,23 +440,83 @@ positive-dimensional fibers, and \(X\) and \(B\) are smooth.
 
 \begin{example}
 Let \(X\) be a projective surface and \(B\) a curve. Denote by \(B^\circ\) the locus 
-of regular values of \(f\). Then \(R^1 f_* \Q_X|_{B^\circ}\) is a weight one variation 
-of Hodge structures.
+of regular values of \(f\), \(\Delta = B \smallsetminus B^\circ\). Then
+\(R^1 f_* \Q_X|_{B^\circ}\) is a weight one variation of Hodge structures. Denote 
+the underlying local system by \(\mathbb{V}\).
 
-As a Hodge module, \(\Q_X(0)\) is pure of weight 0. Over \(B^\circ\), its pushforward 
+In order for \(\mathbb{V}\) to appear in middle perversity in the decomposition theorem, 
+we must shift the pushforward by \(2\): set \(W = Rf_* \Q_X[2]\).
+\begin{align*}
+    W|_{B^\circ} &= \pH^{-2}(W|_{B^\circ})[2] \oplus 
+    \pH^{-1}(W|_{B^\circ})[1] \oplus \pH^0(W|_{B^\circ})[0] \\
+    &= \Q_{B^\circ}[2] \oplus \mathbb{V}[1] \oplus \Q_{B^\circ}.
+\end{align*}
+
+Next, we set our attention to the singular fibers of the pushforward. Let 
+\(p \in \Delta\) be a critical value. Then
+\begin{align*}
+    \pH^{-2}(W)_p[2] &= H^0(X_p, \Q)_p[2] = \Q_p[2], \\
+    \pH^{-1}(W)_p[1] &= H^1(X_p, \Q)_p[1], \\
+    \pH^{-2}(W)_p[0] &= H^2(X_p, \Q)_p[0] = \bigoplus_{X_p^{(i)} \subseteq X_p}
+    \left<[X_p^{(i)}]\right>_p[0],
+\end{align*}
+where the last sum is taken over the irreducible components of \(X_p\).
+
+Altogether, the decomposition theorem yields
+\begin{equation} \label{eq-example-decomp-wt1-loc}
+    W = \Q_B[2] \oplus \ol{\mathbb{V}}[1] \oplus \Q_B[0] \oplus \bigoplus_{p \in \Delta} 
+    \left(\bigoplus_{X_p^{(i)} \subseteq X_p} 
+    \frac{\left<[X_p^{(i)}]\right>}{\left<[X_p]\right>}\right)_p[0].
+\end{equation}
+Here \(\ol{\mathbb{V}} = R^1 f_* \Q_X\). We may also compute the intersection complex 
+\(IC_B(\mathbb{V})\) valued in the local system \(\mathbb{V}\). It appears in this 
+decomposition, and indeed, it is clear from the perverse degrees that 
+\begin{equation}
+    IC_B(\mathbb{V}) = \ol{\mathbb{V}}[1] \oplus \bigoplus_{p \in \Delta} 
+    \left(\bigoplus_{X_p^{(i)} \subseteq X_p} 
+    \frac{\left<[X_p^{(i)}]\right>_p}{\left<[X_p]\right>_p}\right)[0].
+\end{equation}
+This is identified with \(R^1 f_* \Q_X[1]\) if and only if the fibers of \(f\) are 
+all irreducible.
+\qed
+\end{example}
+
+
+\begin{example}
+We now consider the same example, but on the level of mixed Hodge modules. As a Hodge
+module, \(\Q_X(0)\) is pure of weight 0. Over \(B^\circ\), its pushforward 
 decomposes as 
 \begin{equation}
-    \Q_{B^\circ}(0) \oplus R^1 f_* \Q_X|_{B^\circ}[-1] \oplus \Q_{B^\circ}(-1)[-2].
+    \Q_{B^\circ}(0)[0] \oplus \mathcal{V}[-1] \oplus \Q_{B^\circ}(-1)[-2],
 \end{equation}
-Now let \(\Delta = B \smallsetminus B^\circ\). Suppose further that the singular fibers 
-of \(f\) are irreducible. Over \(p \in \Delta\), we get 
+where \(\mathcal{V}\) is the weight one variation of Hodge structures associated to the 
+local system \(\mathbb{V}\) above. Over \(p \in \Delta\), we get 
 \begin{equation}
-    Rf_* \Q_X|_p = H^0(X_p, \Q)[2] \oplus H^1(X_p, \Q)[1] \oplus H^2(X_p, \Q)[0].
+    Rf_* \Q_X|_p = H^0(X_p, \Q)[0] \oplus H^1(X_p, \Q)[-1] \oplus H^2(X_p, \Q)[-2].
 \end{equation}
+Hence, we get the same decomposition as in \eqref{eq-example-decomp-wt1-loc}: 
+\begin{equation}
+   Rf_* \Q_X = \Q_B(0)[0] \oplus \ol{\mathcal{V}}[-1] \oplus \Q_B(-1)[-2] \oplus
+   \bigoplus_{p \in \Delta} \left(\frac{\left<[X_p^{(1)}], \dots, [X_p^{(n)}]\right>}
+   {\left<[X_p^{(1)} + \cdots + X_p^{(n)}]\right>}\right)_p[-2].
+\end{equation}
+Notice that the relative Hard Lefschetz theorem sends \(\Q_B(0)\) to \(\Q_B(-1)[-2]\)
+isomorphically, and fixes all other primative cohomology. We get a mixed Hodge module 
+associated to the intersection complex, 
+\begin{equation}
+    \mathscr{IC}_B(\mathcal{V}) = \ol{\mathcal{V}}[-1] \oplus 
+    \bigoplus_{p \in \Delta} \left(\frac{\left<[X_p^{(1)}], \dots, [X_p^{(n)}]\right>}
+   {\left<[X_p^{(1)} + \cdots + X_p^{(n)}]\right>}\right)_p[-2].
+\end{equation}
+Here \(\ol{\mathcal{V}} = R^1 f_* \Q_X\). From this description, we see that it is a
+simple weight one mixed Hodge module if and only if the fibers of \(f\) are irreducible.
 
-
-
-
+We may compute \(IH^k(B, \mathcal{V}) = H^k(R \Gamma(\mathscr{IC}_B(\mathcal{V})))\).
+By Saito, these carry mixed Hodge structures. In this case, we have 
+\(IH^1(B, \mathcal{V}) = H^0(\ol{\mathcal{V}})\) the non-vanishing invariant cycles, and
+\(IH^2(B, \mathcal{V}) = \bigoplus_{p \in \Delta} H^2(X_p, \Q)^{\mathrm{prim}}\)
+the primative weight two cohomogy of the singular fibers.
+\qed
 \end{example}
 
 
