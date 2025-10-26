@@ -46,6 +46,7 @@
 \newcommand{\sH}{\mathscr{H}}
 \newcommand{\ol}{\overline}
 \newcommand{\ul}{\underline}
+\newcommand{\wt}{\widetilde}
 \newcommand{\pH}{\prescript{p}{}{\mathcal{H}}}
 
 \newtheorem{theorem}{Theorem}[section]
@@ -518,6 +519,108 @@ By Saito, these carry mixed Hodge structures. In this case, we have
 the primative weight two cohomogy of the singular fibers.
 \qed
 \end{example}
+
+
+
+
+\subsection{Resolutions of normal isolated singularities}
+We next consider another important class of morphisms: Let \(X\) be a projective 
+variety singular at \(x\), and let \(f: \wt{X} \to X\) be a resolution. We will 
+use \(f\) compute \(IC_X\). In particular, we may recover \(IH^*(X, \Q)\), which 
+satisfies Poincare duality.
+
+\begin{example}
+Let \(C \subseteq \mathbb{P}^2\) be a plane curve, and consider \(X\) the cone
+over \(C\). We have a natural resolution \(f: \wt{X} \to X\) given by the blow-up 
+morphism, \(\wt{X} = \mathrm{Bl}_x X\). Consider \(K = Rf_* \Q_{\wt{X}}\).
+
+\(\Q_{\wt X}(0)\) is a weight zero Hodge module on \(\wt{X}\), so its pushforward 
+\(K \in \D^b\mathrm{MHM}(X)\) is a complex of pure weight zero. The restriction 
+to the smooth locus of \(X\) is \(K|_{X^\circ} = \Q_{X^\circ}(0)\), a local system.
+Over the singular point, the fiber is \(\wt{X}_x \simeq S\), so its cohomology is
+\begin{equation}
+    K_x = \Q_x(0)[0] \oplus H^1(C, \Q)_x[-1] \oplus \Q_x(-1)[-2].
+\end{equation}
+Thus, the decomposition theorem yields 
+\begin{equation}
+    K = \Q_X(0)[0] \oplus H^1(C, \Q)_x[-1] \oplus \Q_x(-1)[-2].
+\end{equation}
+
+Now, the first summand is supported in dimension one, while the second is supported 
+in dimension zero. We therefore see that both of them of the same perverse degree,
+so that 
+\begin{equation}
+    \mathscr{IC}_X = \Q_X(0)[0] \oplus H^1(C, \Q)_x[-1].
+\end{equation}
+In particular, this implies that 
+\begin{equation}
+    IH^i(X, \Q) = \begin{cases}
+        H^1(C, \Q) & : i = 1 \\
+        H^i(X, \Q) & : i \neq 1
+    \end{cases}
+\end{equation}
+Intersection cohomology satisfies Poincare duality, so we can mostly recover 
+\(H^*(X, \Q)\) from this description:
+\begin{equation}
+    H^0(X, \Q) = \Q,\ H^1(X, \Q) = 0,\ H^2(X, \Q) = ?,\ H^3(X, \Q) = \Q^{2g},\ 
+    H^4(X, \Q) = \Q.
+\end{equation}
+We can check that \(H^2(X, \Q) = \Q\) by noting that all non-ruling classes in 
+\(H^2(X, \Q)\) can be contracted to zero at the cone point, and are therefore trivial.
+\qed
+\end{example}
+
+
+\begin{example}
+This time, set \(S \subseteq \mathbb{P}^2\) to be a quadric surface, and consider
+the cone \(X \subseteq \mathbb{P}^3\) over \(S\). We have two resolutions to 
+choose from: the blow-up of the cone point \(x \in X\), or the blow-up of a line 
+\(L \ni x\) in \(X\).
+
+First, let us consider the former: \(\wt{X} = \mathrm{Bl}_x X\), \(f: \wt{X} \to X\). 
+As before, let \(K = Rf_* \Q_X\). We once again have \(K|_{X^\circ} = \Q_{X^\circ}(0)\).
+Anything interesting will again have to happen over the cone point. The fiber 
+\(\wt{X}_x \simeq S\), which happens to be simply connected. We see that 
+\begin{equation}
+    K = \Q_X(0)[0] \oplus H^2(S, \Q)_x[-2] \oplus \Q_x(-2)[-4].
+\end{equation}
+The first summand is supported in dimension two, while the primitive part of the second 
+is supported in dimension zero. Thus, they have the same perversity, and 
+\begin{equation}
+    \mathscr{IC}_X = \Q_X(0)[0] \oplus H^2(S, \Q)_x^{\mathrm{prim}}[-2].
+\end{equation}
+
+Now we can again compute the intersection cohomology of \(X\). We get 
+\begin{equation}
+    IH^i(X, \Q) = \begin{cases}
+        H^2(X, \Q) \oplus \left<L_1 - L_2\right> & : i = 2\\
+        H^i(X, \Q) & : i \neq 2.
+    \end{cases}
+\end{equation}
+In particular, we can conclude that 
+\begin{equation}
+    H^0(X, \Q) = \Q,\ H^2(X, \Q) = \Q,\ H^4(X, \Q) = \Q^2,\ H^6(X, \Q) = \Q, 
+\end{equation}
+and all odd-degree cohomology vanishes from standard rationality arguments.
+\qed
+\end{example}
+
+\begin{example}
+Had we instead taken \(\wt{X} = \mathrm{Bl}_L X\), \(f: \wt{X} \to X\), we would have 
+\(\wt{X}_x = \mathbb{P}^1\). Now if we consider \(K = Rf_* \Q_{\wt{X}}\), the 
+decomposition theorem yields 
+\begin{equation}
+    K = \Q_X(0)[0] \oplus \Q_x(-1)[-2] \simeq \mathscr{IC}_X.
+\end{equation}
+Hence, we see that some resolutions are better for computing intersection cohomology 
+than others. Note that this map \(f\) had the property that 
+\begin{equation}
+    Rf_* \mathscr{IC}_{\wt{X}} = \mathscr{IC}_X.
+\end{equation}
+\qed
+\end{example}
+
+
 
 
 
