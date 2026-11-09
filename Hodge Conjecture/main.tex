@@ -1,0 +1,1054 @@
+\documentclass[12pt]{amsart}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{quiver}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=green,
+    urlcolor=cyan,
+    citecolor=magenta,
+    pdftitle={Hodge Loci, Mumford--Tate Groups, and the Hodge Conjecture for Abelian Varieties},
+    pdfpagemode=FullScreen,
+}
+\urlstyle{same}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\Gm}{\mathbb{G}_m}
+\newcommand{\Del}{\mathbb{S}}
+\newcommand{\End}{\text{End}}
+\newcommand{\Aut}{\text{Aut}}
+\newcommand{\Hom}{\text{Hom}}
+\newcommand{\id}{\text{id}}
+
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\Sp}{Sp}
+\DeclareMathOperator{\GSp}{GSp}
+\DeclareMathOperator{\MT}{MT}
+\DeclareMathOperator{\Hg}{Hg}
+\DeclareMathOperator{\Hdg}{Hdg}
+\DeclareMathOperator{\CH}{CH}
+\DeclareMathOperator{\NL}{NL}
+\DeclareMathOperator{\HL}{HL}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Nm}{Nm}
+\DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\Pic}{Pic}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\divisor}{div}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\fH}{\mathfrak{H}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\fsl}{\mathfrak{sl}}
+\newcommand{\fsp}{\mathfrak{sp}}
+\newcommand{\ol}{\overline}
+\newcommand{\wt}{\widetilde}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{fact}[theorem]{Fact}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\numberwithin{equation}{section}
+
+
+\title[Hodge Loci, MT Groups, and the Hodge Conjecture]{Hodge Loci, Mumford--Tate Groups, and the Hodge Conjecture for Abelian Varieties}
+\author{Edward Varvak}
+
+\begin{document}
+
+\maketitle
+
+These are notes for an introductory talk on Hodge (or Noether--Lefschetz) loci,
+Mumford--Tate groups, and the Hodge conjecture, with abelian varieties as the
+running example. The guiding principle is
+\begin{center}
+    \emph{Hodge classes on $A$ $=$ invariants of the Mumford--Tate group of $A$,}
+\end{center}
+so that computing Mumford--Tate groups computes Hodge classes. Hodge loci are
+where Hodge classes ``jump'', and on the moduli space of abelian varieties they
+correspond to algebraic subgroups. We end by applying this to the fibers of a
+maximally varying Lagrangian fibration (\Cref{thm:main,cor:main}).
+
+Throughout, varieties are over $\C$, and cohomology means singular cohomology of
+the associated complex analytic space.
+
+\section{Algebraic cycles and the Hodge conjecture}
+
+Let $X$ be a smooth projective variety of dimension $n$.
+
+\begin{definition}
+    An \emph{algebraic cycle of codimension $p$} on $X$ is a finite formal sum
+    $Z = \sum_i n_i Z_i$ with $n_i \in \Z$ and $Z_i \subseteq X$ irreducible
+    closed subvarieties of codimension $p$. These form a free abelian group
+    $\mathcal{Z}^p(X)$.
+\end{definition}
+
+\begin{definition}
+    A cycle $Z \in \mathcal{Z}^p(X)$ is \emph{rationally equivalent to zero} if
+    there are subvarieties $W_j \subseteq X$ of codimension $p-1$ and rational
+    functions $f_j \in \C(W_j)^\times$ with $Z = \sum_j \divisor(f_j)$. The
+    \emph{Chow group} is $\CH^p(X) = \mathcal{Z}^p(X)/\sim_{\mathrm{rat}}$.
+\end{definition}
+
+For example $\CH^1(X) = \Pic(X)$. Equivalently, $Z \sim_{\mathrm{rat}} 0$ if
+$Z$ is a sum of differences $\Gamma_0 - \Gamma_\infty$ of fibers of
+subvarieties $\Gamma \subseteq X \times \PP^1$ flat over $\PP^1$, so rationally
+equivalent cycles are deformations of each other over $\PP^1$.
+
+\subsection{The cycle class map}
+If $Z \subseteq X$ is irreducible of codimension $p$, integration over the
+smooth locus of $Z$ gives a well-defined functional
+$\eta \mapsto \int_Z \eta$ on $H^{2n-2p}(X, \C)$ (Lelong), and hence by
+Poincar\'e duality a class $[Z] \in H^{2p}(X, \C)$. In fact
+$[Z] \in H^{2p}(X, \Z)$: it is the Poincar\'e dual of the fundamental class of
+$Z$. Since cohomology classes are locally constant in families, this descends
+to the \emph{cycle class map}
+\begin{equation*}
+    \mathrm{cl} \colon \CH^p(X) \to H^{2p}(X, \Z).
+\end{equation*}
+
+\begin{lemma}\label{lem:cycle-class-hodge}
+    For any cycle $Z$, the image of $[Z]$ in $H^{2p}(X, \C)$ lies in
+    $H^{p,p}(X)$.
+\end{lemma}
+\begin{proof}
+    By Poincar\'e duality it suffices to show $\int_Z \eta = 0$ for every closed
+    form $\eta$ of type $(a, b)$ with $a + b = 2n - 2p$ and
+    $(a, b) \neq (n - p, n - p)$. But then $a > n - p$ or $b > n - p$, and an
+    $(a,b)$-form restricts to zero on the complex manifold $Z^{\mathrm{sm}}$,
+    which has dimension $n - p$.
+\end{proof}
+
+\begin{definition}
+    The groups of \emph{integral} and \emph{rational Hodge classes} are
+    \begin{align*}
+        \Hdg^p(X, \Z) &= \{\alpha \in H^{2p}(X, \Z) : \alpha_\C \in H^{p,p}(X)\},\\
+        \Hdg^p(X) = \Hdg^p(X, \Q) &= H^{2p}(X, \Q) \cap H^{p,p}(X).
+    \end{align*}
+    A Hodge class is \emph{algebraic} if it lies in the image of $\mathrm{cl}$
+    (respectively of $\mathrm{cl} \otimes \Q$).
+\end{definition}
+
+\begin{remark}
+    The Hodge conjecture only concerns the \emph{image} of $\mathrm{cl}$, so
+    rational equivalence plays no real role below. It is just the most natural
+    equivalence relation to put on cycles.
+\end{remark}
+
+\subsection{The (integral) Hodge conjecture}
+
+\begin{conjecture}[Integral Hodge conjecture]
+    For all $p$, the cycle class map
+    \begin{equation*}
+        \mathrm{cl} \colon \CH^p(X) \to \Hdg^p(X, \Z)
+    \end{equation*}
+    is surjective.
+\end{conjecture}
+
+\begin{theorem}[Lefschetz $(1,1)$]
+    The integral Hodge conjecture holds for $p = 1$: every class in
+    $\Hdg^1(X, \Z)$ is the first Chern class of a line bundle.
+\end{theorem}
+
+It also holds trivially for $p = 0$ and $p = n$. Unfortunately, it is false in
+general.
+
+\begin{theorem}[Atiyah--Hirzebruch \cite{AH62}]
+    There are smooth projective $X$ with torsion classes in $H^4(X, \Z)$ that
+    are not algebraic. (Torsion classes vanish in $H^4(X, \C)$, so they are
+    automatically Hodge classes.)
+\end{theorem}
+
+\begin{theorem}[Koll\'ar \cite{Kollar92}]
+    Let $X \subseteq \PP^4$ be a very general hypersurface of degree $d$, where
+    $p^3 \mid d$ for some prime $p \geq 5$. Then every curve on $X$ has degree
+    divisible by $p$.
+\end{theorem}
+
+By the Lefschetz hyperplane theorem and Poincar\'e duality,
+$H^4(X, \Z) \cong \Z$ is generated by a class $\ell$ with $\ell \cdot h = 1$,
+and every class in $H^4(X,\Z)$ is Hodge. So $\ell$ is a non-torsion Hodge class
+that is not algebraic, even though $d \ell = h^2$ is. The standard fix is to
+pass to $\Q$-coefficients.
+
+\begin{conjecture}[Hodge conjecture]
+    For all $p$, $\Hdg^p(X)$ is spanned over $\Q$ by classes of algebraic
+    cycles, i.e.\ $\mathrm{cl} \otimes \Q \colon \CH^p(X)_\Q \to \Hdg^p(X)$ is
+    surjective.
+\end{conjecture}
+
+\begin{proposition}
+    The Hodge conjecture holds in degrees $p = 0, 1, n-1, n$. In particular it
+    holds for all $X$ of dimension at most $3$.
+\end{proposition}
+\begin{proof}
+    The cases $p = 0, n$ are trivial and $p = 1$ is Lefschetz $(1,1)$. For
+    $p = n - 1$, let $L$ be cup product with the class of a hyperplane section
+    $H$. By hard Lefschetz,
+    $L^{n-2} \colon H^2(X, \Q) \to H^{2n-2}(X, \Q)$ is an isomorphism, and it
+    maps $H^{1,1}$ onto $H^{n-1,n-1}$, so it gives an isomorphism
+    $\Hdg^1(X) \cong \Hdg^{n-1}(X)$. It sends $[D]$ to
+    $[D \cap H_1 \cap \cdots \cap H_{n-2}]$ for general hyperplane sections
+    $H_i$, so it preserves algebraic classes.
+\end{proof}
+
+\begin{remark}\label{rmk:AV-intro}
+    If $A$ is an abelian variety, then $H^*(A, \Z)$ is an exterior algebra on
+    $H^1(A, \Z)$, and in particular torsion-free. So there are no
+    Atiyah--Hirzebruch type counterexamples on abelian varieties. Nevertheless,
+    the integral Hodge conjecture fails for very general principally polarized
+    abelian varieties of dimension $\geq 4$ by recent work of Engel, de Gaay
+    Fortman, and Schreieder; see \Cref{thm:EdGFS} below.
+\end{remark}
+
+\section{Abelian varieties and their moduli}
+
+\subsection{Hodge structures}
+Let $\Del = \Res_{\C/\R} \Gm$ be the Deligne torus, so $\Del(\R) = \C^\times$.
+A \emph{$\Q$-Hodge structure of weight $w$} is a finite-dimensional
+$\Q$-vector space $V$ together with a homomorphism of real algebraic groups
+$h \colon \Del \to \GL(V_\R)$ such that
+\begin{equation*}
+    V_\C = \bigoplus_{p + q = w} V^{p,q}, \qquad
+    h(z) \text{ acts on } V^{p,q} \text{ by } z^p \ol{z}^q.
+\end{equation*}
+(Conventions differ by a sign, which will not matter.) Two consequences we will
+use constantly:
+\begin{itemize}
+    \item for $r \in \R^\times$, $h(r) = r^w$ is a scalar;
+    \item for $z \in U(1) = \{|z| = 1\}$, $h(z)$ acts on $V^{p,q}$ by
+    $z^{p-q}$.
+\end{itemize}
+Duals, tensor products, and exterior powers of Hodge structures are Hodge
+structures; we write
+$T^{a,b}(V) = V^{\otimes a} \otimes (V^\vee)^{\otimes b}$, of weight
+$(a-b)w$, and call $T^{a,b}(V)$, $\Lambda^k V$, $\Sym^k V$ and sums of these
+\emph{tensor constructions} of $V$. If $W$ has weight $2p$, a \emph{Hodge
+class} in $W$ is an element of $W \cap W^{p,p}$.
+
+\subsection{Abelian varieties}
+A complex abelian variety of dimension $g$ is a projective complex torus
+$A = \C^g / \Lambda$. We always write
+\begin{equation*}
+    V = H^1(A, \Q).
+\end{equation*}
+Then $H^k(A, \Z) = \Lambda^k H^1(A, \Z)$,
+$H^1(A, \C) = H^{1,0} \oplus H^{0,1}$ with $H^{1,0} = H^0(A, \Omega^1_A)$, and
+$H^{p,q}(A) = \Lambda^p H^{1,0} \otimes \Lambda^q H^{0,1}$. So:
+
+\begin{center}
+    \emph{The Hodge structure on $H^*(A, \Q) = \Lambda^\bullet V$ is determined
+    by the weight one Hodge structure $V$,}
+\end{center}
+and $\Hdg^p(A)$ is the set of Hodge classes in $\Lambda^{2p} V$.
+
+A polarization is the class $\theta = c_1(L) \in H^2(A, \Z)$ of an ample line
+bundle. We will only consider principal polarizations, for which there is a
+basis $e_1, \ldots, e_g, f_1, \ldots, f_g$ of $H^1(A, \Z)$ with
+\begin{equation*}
+    \theta = \sum_{i=1}^g e_i \wedge f_i \in \Lambda^2 H^1(A, \Z).
+\end{equation*}
+Let $\psi$ be the symplectic form on $V$ for which $(e_i, f_i)$ is a symplectic
+basis. We write
+\begin{equation*}
+    \Sp(V) = \Sp(V, \psi) = \Stab_{\GL(V)}(\theta) \cong \Sp_{2g, \Q}, \qquad
+    \GSp(V) = \Gm \cdot \Sp(V),
+\end{equation*}
+the latter being the group of $g \in \GL(V)$ that preserve $\psi$ up to a
+scalar.
+
+\subsection{The Siegel upper half space and $\cA_g$}
+Fix $V_\Z = \Z^{2g}$ with its standard symplectic form $\psi$, and let
+$V = V_\Z \otimes \Q$. Let
+\begin{equation*}
+    \fH_g = \left\{ h \colon \Del \to \GL(V_\R) \;\middle|\;
+    \begin{array}{l}
+        h \text{ is a Hodge structure of weight } 1 \text{ with}\\
+        \psi(h(i) x, h(i) y) = \psi(x, y), \text{ and } \psi(x, h(i)y)
+        \text{ positive definite}
+    \end{array}\right\}.
+\end{equation*}
+The last two conditions say that $\psi$ is a polarization of the Hodge
+structure (for a suitable sign convention).
+
+\begin{theorem}[Riemann]
+    Points of $\fH_g$ are in bijection with isomorphism classes of pairs
+    $(A, \beta)$, where $A$ is a principally polarized abelian variety of
+    dimension $g$ and $\beta \colon H^1(A, \Z) \cong V_\Z$ is a symplectic
+    isomorphism.
+\end{theorem}
+
+The group $\Sp(V_\R) = \Sp_{2g}(\R)$ acts on $\fH_g$ by conjugation,
+$g \cdot h = g h g^{-1}$, and this action is transitive with stabilizer
+isomorphic to $U(g)$. So
+\begin{equation*}
+    \fH_g \cong \Sp_{2g}(\R)/U(g) \cong
+    \{\tau \in M_g(\C) : \tau = \tau^T, \ \mathrm{Im}(\tau) > 0\},
+\end{equation*}
+the classical Siegel upper half space, of complex dimension $g(g+1)/2$.
+Forgetting the marking $\beta$, we get the moduli space of principally polarized
+abelian varieties
+\begin{equation*}
+    \cA_g = \Sp_{2g}(\Z) \backslash \fH_g,
+\end{equation*}
+which is a quasi-projective variety of dimension $g(g+1)/2$ (Baily--Borel).
+
+\begin{remark}[Shimura varieties]
+    $\cA_g$ is the basic example of a \emph{Shimura variety}: a quotient
+    $\Gamma \backslash X$, where $G$ is a reductive group over $\Q$, $X$ is a
+    $G(\R)$-conjugacy class of homomorphisms $\Del \to G_\R$ (satisfying axioms
+    that make $X$ a Hermitian symmetric domain), and $\Gamma \subseteq G(\Q)$
+    is an arithmetic subgroup. Here $G = \GSp(V)$ and $X = \fH_g$. The point
+    is that the period domain is a single orbit of a real algebraic group
+    acting by conjugation on Hodge structures. We will see that the Hodge loci
+    in $\cA_g$ have the same form, for smaller groups (\Cref{sec:hodge-loci}).
+\end{remark}
+
+The key feature of $\fH_g$ is that for every $h \in \fH_g$,
+\begin{equation*}
+    H^{2p}(A_h, \Q) = \Lambda^{2p} V
+\end{equation*}
+is the \emph{same} $\Q$-vector space; only the Hodge decomposition, induced by
+$h$, moves. This makes Hodge loci in $\fH_g$ very concrete.
+
+\section{Mumford--Tate groups}
+
+\begin{definition}
+    Let $V$ be a $\Q$-Hodge structure given by $h \colon \Del \to \GL(V_\R)$.
+    \begin{itemize}
+        \item The \emph{Mumford--Tate group} $\MT(V)$ is the smallest
+        $\Q$-algebraic subgroup $G \subseteq \GL(V)$ with
+        $h(\C^\times) \subseteq G(\R)$.
+        \item The \emph{Hodge group} (or special Mumford--Tate group) $\Hg(V)$
+        is the smallest $\Q$-algebraic subgroup $G \subseteq \GL(V)$ with
+        $h(U(1)) \subseteq G(\R)$.
+    \end{itemize}
+    For an abelian variety we write $\MT(A) = \MT(H^1(A, \Q))$ and
+    $\Hg(A) = \Hg(H^1(A,\Q))$.
+\end{definition}
+
+\begin{remark}\label{rmk:MT-basic}
+    \begin{enumerate}[label=(\arabic*)]
+        \item $\MT(V)$ and $\Hg(V)$ are connected, since the identity component
+        also satisfies the defining property.
+        \item If $V$ has weight $w \neq 0$, then $\MT(V) = \Gm \cdot \Hg(V)$,
+        since $\C^\times = \R_{>0} \cdot U(1)$ and $h(r) = r^w$ is a scalar.
+        \item If $V$ is polarizable (e.g.\ $V = H^1(A,\Q)$), then $\MT(V)$ and
+        $\Hg(V)$ are reductive \cite{Deligne82, Moonen04}.
+        \item For an abelian variety, $\Hg(A^m) = \Hg(A)$, acting diagonally on
+        $H^1(A^m, \Q) = V^{\oplus m}$: the diagonal copy of $\Hg(A)$ contains
+        $h(U(1))$, and any $\Q$-subgroup of it containing $h(U(1))$ projects
+        onto $\Hg(A)$.
+    \end{enumerate}
+\end{remark}
+
+The reason to care about $\Hg$ is the following.
+
+\begin{proposition}\label{prop:key}
+    Let $W$ be a tensor construction of $V$ of even weight $2p$. Then
+    $t \in W$ is a Hodge class if and only if $t$ is fixed by $\Hg(V)$. In
+    particular, for an abelian variety $A$,
+    \begin{equation*}
+        \Hdg^p(A) = (\Lambda^{2p} V)^{\Hg(A)}.
+    \end{equation*}
+\end{proposition}
+\begin{proof}
+    Since $\Hg(V) \subseteq \GL(V)$, it acts on every tensor construction of
+    $V$. An element $z \in U(1)$ acts on $W^{a,b}$ by $z^{a-b}$, so
+    $t \in W^{p,p}$ if and only if $h(z) t = t$ for all $z \in U(1)$. Since $t$
+    is rational, its stabilizer $\Stab(t) \subseteq \GL(V)$ is a $\Q$-algebraic
+    subgroup, and so
+    \begin{equation*}
+        t \in W^{p,p} \iff h(U(1)) \subseteq \Stab(t)(\R) \iff
+        \Hg(V) \subseteq \Stab(t)
+    \end{equation*}
+    by minimality of $\Hg(V)$.
+\end{proof}
+
+\begin{remark}
+    The Mumford--Tate group itself acts on a Hodge class of weight $2p$ through
+    the character $\Gm \to \Gm$, $r \mapsto r^{2p}$ on the central $\Gm$, which
+    is why it is more convenient to work with $\Hg$. (Alternatively, Tate twist
+    everything to weight $0$.)
+\end{remark}
+
+\begin{corollary}\label{cor:key}
+    Let $A$ be a principally polarized abelian variety, $V = H^1(A, \Q)$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Since $\theta \in \Lambda^2 V$ is a Hodge class,
+        $\Hg(A) \subseteq \Sp(V)$ and $\MT(A) \subseteq \GSp(V)$.
+        \item Sub-Hodge structures of $V$ are exactly the $\Hg(A)$-stable
+        subspaces.
+        \item Morphisms of Hodge structures are Hodge classes in
+        $\Hom(V, V') = V^\vee \otimes V'$ (weight $0$). So
+        $\End_{\mathrm{HS}}(V) = \End(V)^{\Hg(A)}$, and more generally, since
+        $\Hom(A, B) \otimes \Q \cong \Hom_{\mathrm{HS}}(H^1(B,\Q), H^1(A,\Q))$,
+        endomorphisms and isogenies of abelian varieties are detected by $\Hg$.
+    \end{enumerate}
+\end{corollary}
+
+In fact $\Hg(V)$ is \emph{determined} by the Hodge classes in all tensor
+constructions:
+
+\begin{fact}[Deligne \cite{Deligne82}]\label{fact:deligne}
+    If $V$ is polarizable, then $\Hg(V)$ is the subgroup of $\GL(V)$ fixing
+    every Hodge class in every $T^{a,b}(V)$.
+\end{fact}
+
+\subsection{Elliptic curves}
+For an elliptic curve $E$, $V = H^1(E, \Q)$ is $2$-dimensional, so
+$\Sp(V) = \SL(V)$.
+
+\begin{proposition}\label{prop:elliptic}
+    Let $E$ be an elliptic curve and $V = H^1(E, \Q)$.
+    \begin{enumerate}[label=(\roman*)]
+        \item If $E$ does not have complex multiplication, then
+        $\Hg(E) = \SL(V) \cong \SL_2$ and $\MT(E) = \GL(V) \cong \GL_2$.
+        \item If $\End(E) \otimes \Q = K$ is an imaginary quadratic field, then
+        $V$ is a $1$-dimensional $K$-vector space,
+        \begin{equation*}
+            \MT(E) = T_K := \Res_{K/\Q} \Gm, \qquad
+            \Hg(E) = U_K := \ker\left(\Nm \colon T_K \to \Gm\right).
+        \end{equation*}
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    $\Hg = \Hg(E)$ is a connected reductive subgroup of $\SL(V)$, and it is
+    nontrivial since $h(z)$ acts on $V^{1,0}$ by $z$. The connected reductive
+    subgroups of $\SL_2$ are $1$, the $1$-dimensional tori, and $\SL_2$
+    itself.
+
+    Suppose $\Hg = T$ is a torus. Over $\C$, $T$ acts on $V_\C$ through two
+    distinct characters $\chi, \chi^{-1}$ (the only scalars in $\SL_2$ are
+    $\pm 1$), so its centralizer $K' = \End(V)^T$ is a $2$-dimensional
+    commutative $\Q$-algebra. By \Cref{cor:key}(c),
+    $K' \subseteq \End(E) \otimes \Q$. Since $\End(E) \otimes \Q$ is either
+    $\Q$ or an imaginary quadratic field, $E$ has CM.
+
+    Conversely, suppose $E$ has CM by $K$. Then $K$ acts on $V$ commuting with
+    $\Hg$, so $\Hg$ lies in the centralizer of $K$ in $\SL(V)$, which is
+    $T_K \cap \SL(V) = U_K$. This is a $1$-dimensional torus, and $\Hg$ is
+    nontrivial and connected, so $\Hg = U_K$. Finally
+    $\MT(E) = \Gm \cdot U_K = T_K$.
+\end{proof}
+
+\begin{remark}
+    $E_\tau = \C/(\Z + \tau\Z)$ has CM if and only if $\tau \in \fH_1$ is an
+    imaginary quadratic number. So CM elliptic curves correspond to a
+    \emph{countable dense} subset of $\fH_1$.
+\end{remark}
+
+\begin{example}[Hodge classes on $E \times E$]\label{ex:ExE}
+    We have $H^1(E \times E) = V \oplus V$, and by \Cref{rmk:MT-basic}(4),
+    $\Hg(E \times E) = \Hg(E)$ acting diagonally. Then
+    \begin{equation*}
+        H^2(E \times E, \Q) = \Lambda^2 V \oplus (V \otimes V) \oplus
+        \Lambda^2 V.
+    \end{equation*}
+    $\Hg(E) \subseteq \SL(V)$ acts trivially on each $\Lambda^2 V$, giving the
+    classes of $E \times 0$ and $0 \times E$. Using the
+    $\GL(V)$-equivariant isomorphism $V \cong V^\vee \otimes \Lambda^2 V$, we
+    get $V \otimes V \cong \End(V)$ as $\Hg(E)$-representations, so
+    $(V \otimes V)^{\Hg(E)} \cong \End(V)^{\Hg(E)} = \End(E) \otimes \Q$.
+    Therefore
+    \begin{equation*}
+        \rho(E \times E) = 2 + \dim_\Q \End(E) \otimes \Q =
+        \begin{cases}
+            3 & E \text{ without CM,}\\
+            4 & E \text{ with CM.}
+        \end{cases}
+    \end{equation*}
+    The extra classes are the diagonal and, in the CM case, the graph of a
+    complex multiplication. So ``$E$ has CM'' is detected by a Hodge class on
+    $E \times E$.
+\end{example}
+
+\begin{proposition}\label{prop:product-elliptic}
+    Let $E_1, \ldots, E_n$ be pairwise non-isogenous elliptic curves without
+    CM, $A = E_1 \times \cdots \times E_n$, and $V_i = H^1(E_i, \Q)$. Then
+    \begin{align*}
+        \Hg(A) &= \SL(V_1) \times \cdots \times \SL(V_n),\\
+        \MT(A) &= \Gm \cdot \SL_2^n = \Big\{(g_i) \in \prod_i \GL(V_i) :
+        \det g_1 = \cdots = \det g_n\Big\}.
+    \end{align*}
+\end{proposition}
+\begin{proof}
+    $\prod_i \Hg(E_i) = \prod_i \SL(V_i)$ is a $\Q$-group containing
+    $h(U(1)) = \{(h_1(z), \ldots, h_n(z))\}$, so $\Hg(A)$ is contained in it.
+    The projection of $\Hg(A)$ to $\SL(V_i)$ is a $\Q$-group containing
+    $h_i(U(1))$, so it is all of $\SL(V_i)$ by \Cref{prop:elliptic}. Let
+    $\fh \subseteq \bigoplus_i \fsl(V_i)$ be the Lie algebra of $\Hg(A)$.
+
+    Take $n = 2$. Then $\fh \cap (\fsl(V_1) \oplus 0)$ is an ideal of
+    $\fsl(V_1)$, because $\fh$ surjects onto $\fsl(V_1)$. As $\fsl_2$ is
+    simple, either it is all of $\fsl(V_1)$, in which case
+    $\fh = \fsl(V_1) \oplus \fsl(V_2)$, or it is $0$. Arguing the same way
+    with the second factor, if $\fh \neq \fsl(V_1) \oplus \fsl(V_2)$ then
+    $\fh$ is the graph of an isomorphism $\fsl(V_1) \to \fsl(V_2)$ defined
+    over $\Q$. Every such isomorphism has the form $x \mapsto f x f^{-1}$ for
+    a linear isomorphism $f \colon V_1 \to V_2$, since
+    $\Aut(\fsl_2) = \mathrm{PGL}_2$ and
+    $\mathrm{PGL}_2(\Q) = \GL_2(\Q)/\Q^\times$. Then
+    $\Hg(A) = \{(g, f g f^{-1})\}$ fixes $f \in \Hom(V_1, V_2)$, so $f$ is a
+    morphism of Hodge structures by \Cref{cor:key}(c). This gives an
+    isogeny $E_2 \to E_1$, a contradiction.
+
+    For general $n$, induct: by induction $\fh$ surjects onto
+    $\fsl(V_2) \oplus \cdots \oplus \fsl(V_n)$, and if
+    $\fh \cap (\fsl(V_1) \oplus 0) = 0$, then $\fh$ is the graph of a surjection
+    $\bigoplus_{i \geq 2} \fsl(V_i) \to \fsl(V_1)$. Its kernel is an ideal,
+    hence a sum of all but one factor $\fsl(V_j)$, so the projection of $\fh$
+    to $\fsl(V_1) \oplus \fsl(V_j)$ is a graph, contradicting the case
+    $n = 2$.
+\end{proof}
+
+Note that $\SL_2 = \Sp_2$, so $\MT(E_1 \times \cdots \times E_n) =
+\Gm \cdot (\Sp_{2,\Q})^n$. This is the shape that will appear in
+\Cref{thm:main}.
+
+\section{Hodge loci}\label{sec:hodge-loci}
+
+\subsection{Definitions}
+Let $f \colon X \to S$ be a smooth projective morphism to a connected complex
+manifold, and fix $p$. Let $\pi \colon \wt{S} \to S$ be the universal cover.
+Over $\wt{S}$ the local system $R^{2p}f_*\Q$ is trivial, so parallel transport
+identifies $H^{2p}(X_{\tilde{s}}, \Q)$ with a fixed $\Q$-vector space $H$ for
+all $\tilde{s} \in \wt{S}$. The Hodge filtration $F^\bullet_{\tilde{s}}$ on
+$H_\C$ varies holomorphically with $\tilde{s}$ (Griffiths).
+
+\begin{definition}
+    For $\lambda \in H$, the \emph{Hodge locus} (or \emph{Noether--Lefschetz
+    locus}) of $\lambda$ is
+    \begin{equation*}
+        \NL(\lambda) = \{\tilde{s} \in \wt{S} : \lambda \in
+        \Hdg^p(X_{\tilde{s}})\}.
+    \end{equation*}
+    Its image $\pi(\NL(\lambda)) \subseteq S$ is the set of $s$ such that some
+    parallel transport of $\lambda$ to $X_s$ is a Hodge class. The \emph{Hodge
+    locus of $f$} is
+    \begin{equation*}
+        \HL(f) = \bigcup_{\lambda \in H,\ \NL(\lambda) \neq \wt{S}}
+        \pi(\NL(\lambda)) \subseteq S.
+    \end{equation*}
+    The same definitions make sense for any polarizable variation of Hodge
+    structure, e.g.\ for tensor constructions of $R^k f_* \Q$.
+\end{definition}
+
+\begin{example}[Noether--Lefschetz]
+    Let $S$ parametrize smooth surfaces $X_s \subseteq \PP^3$ of degree
+    $d \geq 4$, and $p = 1$. By Lefschetz $(1,1)$, $\HL(f)$ is the locus of
+    surfaces with Picard number $\rho(X_s) \geq 2$. The Noether--Lefschetz
+    theorem says that $\HL(f) \neq S$, i.e.\ the very general such surface has
+    $\Pic(X_s) = \Z \cdot \cO(1)$. However, $\HL(f)$ is dense in $S$ in the
+    analytic topology \cite{CHM88}. This is where the name comes from; for
+    classes of higher degree, ``Hodge locus'' is more common.
+\end{example}
+
+\begin{proposition}
+    $\NL(\lambda)$ is a closed complex analytic subset of $\wt{S}$.
+\end{proposition}
+\begin{proof}
+    Since $\lambda$ is real and $F^p \cap \ol{F^p} = H^{p,p}$ in weight $2p$,
+    $\lambda$ is a Hodge class at $\tilde{s}$ if and only if
+    $\lambda \in F^p_{\tilde{s}}$. So $\NL(\lambda)$ is the zero locus of the
+    image of the constant (hence holomorphic) section $\lambda$ in the
+    holomorphic vector bundle $(H \otimes \cO_{\wt{S}})/F^p$.
+\end{proof}
+
+Much more is true.
+
+\begin{theorem}[Cattani--Deligne--Kaplan \cite{CDK95}]
+    If $S$ is quasi-projective and $f$ is algebraic, then $\pi(\NL(\lambda))$
+    is a closed algebraic subvariety of $S$ for every $\lambda$.
+\end{theorem}
+
+\begin{remark}[Hodge conjecture $\Rightarrow$ CDK]
+    Suppose the Hodge conjecture holds. Then $\lambda_s$ is Hodge if and only
+    if it is a $\Q$-linear combination of classes of subvarieties of $X_s$. The
+    relative Hilbert scheme of $X/S$ has countably many components, each
+    projective over $S$, and the cohomology class of a subvariety is locally
+    constant in flat families. So the locus where $\lambda$ is algebraic is a
+    countable union of images of (products of) such components, hence a
+    countable union of closed algebraic subvarieties of $S$. Thus CDK is
+    exactly what the Hodge conjecture predicts, and is one of the best pieces
+    of evidence for it.
+\end{remark}
+
+\begin{definition}
+    A point $s \in S$ is \emph{very general} if $s \notin \HL(f)$.
+\end{definition}
+
+If $\NL(\lambda) \neq \wt{S}$, then $\NL(\lambda)$ is nowhere dense in
+$\wt{S}$, so $\pi(\NL(\lambda))$ is a countable union of nowhere dense subsets
+of $S$, and by CDK (when $S$ is quasi-projective) it is a proper closed
+subvariety. There are countably many
+$\lambda \in H$, so the very general points are the complement of a countable
+union of proper closed subvarieties; by the Baire category theorem they are
+dense. By construction:
+
+\begin{lemma}
+    If $s \in S$ is very general, then a class in $H^{2p}(X_s, \Q)$ is Hodge if
+    and only if it remains Hodge under parallel transport to every fiber. In
+    words: on a very general fiber, the only Hodge classes are the ones forced
+    by the family.
+\end{lemma}
+
+\subsection{Hodge loci in $\cA_g$}
+Over $\fH_g$ everything is explicit, since $H^{2p}(A_h, \Q) = \Lambda^{2p} V$
+for every $h$. For a tensor $t \in T^{a,b}(V)$ (e.g.\ $t \in \Lambda^{2p}V$),
+put
+\begin{equation*}
+    \NL(t) = \{h \in \fH_g : t \text{ is a Hodge class for } h\}.
+\end{equation*}
+For a $\Q$-algebraic subgroup $H \subseteq \Sp(V)$, put
+\begin{equation*}
+    \fH_g(H) = \{h \in \fH_g : h(U(1)) \subseteq H(\R)\} =
+    \{h \in \fH_g : \Hg(A_h) \subseteq H\}.
+\end{equation*}
+
+\begin{proposition}
+    \begin{enumerate}[label=(\roman*)]
+        \item $\NL(t) = \fH_g(G_t)$, where $G_t = \Stab_{\Sp(V)}(t)$.
+        \item $\fH_g(H)$ is stable under conjugation by $H(\R)$. In particular,
+        it contains the orbit $H(\R) \cdot h$ of any of its points.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    (i) is \Cref{prop:key}, together with the fact that
+    $h(U(1)) \subseteq \Sp(V_\R)$ for all $h \in \fH_g$. For (ii), if
+    $h(U(1)) \subseteq H(\R)$ and $g \in H(\R)$, then
+    $g h(U(1)) g^{-1} \subseteq H(\R)$.
+\end{proof}
+
+\begin{fact}[see \cite{Moonen04, Milne05}]\label{fact:special}
+    Let $h \in \fH_g$ and $H = \Hg(A_h)$. Then $H(\R)^+ \cdot h$ is a closed
+    complex submanifold of $\fH_g$ (a Hermitian symmetric domain), and its
+    image in $\cA_g$ is a closed algebraic subvariety, called a \emph{special}
+    (or \emph{Shimura}) subvariety. Its very general point has Hodge group
+    exactly $H$. The irreducible components of Hodge loci in $\cA_g$ are
+    exactly the special subvarieties, and there are countably many of them
+    since there are countably many $\Q$-subgroups of $\Sp(V)$.
+\end{fact}
+
+So we have a dictionary:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c|c}
+    Hodge theory & Group theory \\
+    \hline
+    Hodge class $t$ on $A_h$ & $\Q$-subgroup $G_t \subseteq \Sp(V)$ fixing $t$\\
+    Hodge locus $\NL(t)$ & union of orbits $H(\R)^+ \cdot h$, $H \subseteq G_t$\\
+    very general point of a special subvariety & $\Hg(A_h) = H$\\
+    very general point of $\cA_g$ & $\Hg(A_h) = \Sp(V)$ (\Cref{thm:very-general})
+\end{tabular}
+\end{center}
+
+\begin{example}[$\cA_1$]\label{ex:A1}
+    By \Cref{prop:elliptic}, the possible Hodge groups are $\SL_2$ and the
+    tori $U_K$. Since $U_K(\R) \cong U(1)$ is compact, the orbit
+    $U_K(\R) \cdot h$ is the single point $\{h\}$. So the special subvarieties
+    of $\cA_1$ are $\cA_1$ itself and the CM points, and the Hodge loci
+    (e.g.\ of the classes on $E \times E$ from \Cref{ex:ExE}) are the CM
+    points. These are countable and dense. So in theorems about the Hodge
+    classes on a ``generic'' member of a family, \emph{general} (outside a
+    proper Zariski closed subset) cannot be improved to anything better than
+    \emph{very general}.
+\end{example}
+
+\begin{example}[$\cA_2$]\label{ex:A2}
+    By Lefschetz $(1,1)$, the Hodge loci of classes in $H^2(A, \Q)$ are the
+    loci where $\rho(A) \geq 2$; their components are called \emph{Humbert
+    surfaces}. There are two kinds of generic Hodge group.
+    \begin{enumerate}[label=(\alph*)]
+        \item Split $V = V_1 \oplus V_2$ into $\psi$-orthogonal planes, so
+        $\theta = \theta_1 + \theta_2$ with $\theta_i \in \Lambda^2 V_i$. Then
+        $G_{\theta_1} = \SL(V_1) \times \SL(V_2)$, and
+        $\NL(\theta_1) = \fH_1 \times \fH_1$, whose image in $\cA_2$
+        is the locus of products $E_1 \times E_2$. Its generic Hodge group is
+        $\SL_2 \times \SL_2 = (\Sp_{2,\Q})^2$ by
+        \Cref{prop:product-elliptic}.
+        \item Let $F$ be a real quadratic field acting on $V$, making $V$ a
+        $2$-dimensional $F$-vector space with $\psi = \Tr_{F/\Q} \circ \psi_F$.
+        Then $H = \Res_{F/\Q} \SL_2$ has $H(\R) = \SL_2(\R) \times \SL_2(\R)$,
+        the orbit is again $\fH_1 \times \fH_1$, and its image in $\cA_2$ is a
+        Hilbert modular surface, parametrizing abelian surfaces with real
+        multiplication by $F$.
+    \end{enumerate}
+    In both cases $H_\C \cong \SL_{2,\C} \times \SL_{2,\C}$ acting on $V_\C$ by
+    the sum of the two standard representations, but only in case (a) is $H$ a
+    product over $\Q$.
+\end{example}
+
+\section{The very general abelian variety}
+
+\begin{lemma}\label{lem:sp-invariants}
+    Let $W$ be a $\Q$-vector space of dimension $2h$ and
+    $\theta \in \Lambda^2 W$ nondegenerate. Then
+    \begin{equation*}
+        (\Lambda^\bullet W)^{\Sp(W)} = \Q[\theta]/(\theta^{h+1}).
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    By the Lefschetz decomposition (which is pure linear algebra here),
+    $\Lambda^k W = \bigoplus_j \theta^j \wedge P^{k-2j}$, where
+    $P^i \subseteq \Lambda^i W$ ($0 \leq i \leq h$) is the primitive subspace.
+    This decomposition is $\Sp(W)$-equivariant since $\theta$ is invariant. For
+    $1 \leq i \leq h$, $P^i_\C$ is a nontrivial irreducible representation of
+    $\Sp_{2h}(\C)$ \cite[Theorem 17.5]{FH91}, so it has no invariants. Only
+    $P^0 = \Q$ contributes, and its copy in $\Lambda^{2j} W$ is spanned by
+    $\theta^j$.
+\end{proof}
+
+\begin{theorem}\label{thm:very-general}
+    Let $(A, \theta)$ be a very general principally polarized abelian variety
+    of dimension $g$. Then
+    \begin{equation*}
+        \Hg(A) = \Sp(V) \cong \Sp_{2g}, \qquad \MT(A) = \GSp(V), \qquad
+        \Hdg^p(A) = \Q \cdot \theta^p.
+    \end{equation*}
+    In particular, $A$ satisfies the Hodge conjecture.
+\end{theorem}
+\begin{proof}
+    For each of the countably many tensors $t \in T^{a,b}(V)$, $\NL(t)$ is a
+    closed analytic subset of $\fH_g$. Take $h$ outside every $\NL(t)$ that is
+    not all of $\fH_g$. (Note that $\gamma \cdot \NL(t) = \NL(\gamma t)$ for
+    $\gamma \in \Sp_{2g}(\Z)$, so this is a condition on the image of $h$ in
+    $\cA_g$.)
+
+    \emph{Claim: every Hodge tensor $t$ for $h$ is $\Sp(V)$-invariant.}
+    Indeed, $\NL(t) = \fH_g$, so $t$ is fixed by $h'(U(1))$ for every
+    $h' \in \fH_g$. Since $\fH_g = \{g h g^{-1} : g \in \Sp(V_\R)\}$, this
+    means $\Stab(t)$ contains every $\Sp(V_\R)$-conjugate of $h(U(1))$. These
+    generate a nontrivial connected normal subgroup of $\Sp(V_\R)$, whose
+    Zariski closure is all of $\Sp(V_\R)$ because $\Sp_{2g}$ is simple. So
+    $\Sp(V) \subseteq \Stab(t)$.
+
+    Now by \Cref{prop:key}, \Cref{cor:key}(a), and the claim,
+    \begin{equation*}
+        (\Lambda^{2p} V)^{\Sp(V)} \subseteq (\Lambda^{2p} V)^{\Hg(A)} =
+        \Hdg^p(A) \subseteq (\Lambda^{2p} V)^{\Sp(V)},
+    \end{equation*}
+    and the outer terms are $\Q \theta^p$ by \Cref{lem:sp-invariants}. The class
+    $\theta^p$ is algebraic: it is the class of
+    $\Theta_1 \cap \cdots \cap \Theta_p$ for general translates $\Theta_i$ of a
+    theta divisor. Finally, by \Cref{fact:deligne}, $\Hg(A)$ is the subgroup
+    fixing all Hodge tensors, which by the claim contains $\Sp(V)$; combined
+    with \Cref{cor:key}(a), $\Hg(A) = \Sp(V)$.
+\end{proof}
+
+\begin{remark}
+    By \Cref{ex:A1}, and similarly because CM points are dense in $\cA_g$, the
+    words ``very general'' cannot be replaced by ``general''.
+\end{remark}
+
+\subsection{Back to integral classes}
+
+\begin{corollary}
+    For a very general principally polarized abelian variety $(A, \theta)$ of
+    dimension $g$,
+    \begin{equation*}
+        \Hdg^p(A, \Z) = \Z \cdot \frac{\theta^p}{p!}.
+    \end{equation*}
+\end{corollary}
+\begin{proof}
+    In a symplectic basis,
+    $\frac{\theta^p}{p!} = \sum_{|I| = p} \bigwedge_{i \in I}(e_i \wedge f_i)$,
+    which lies in $\Lambda^{2p} H^1(A, \Z)$ and is indivisible. So
+    $\Q\theta^p \cap H^{2p}(A, \Z) = \Z \cdot \theta^p/p!$.
+\end{proof}
+
+So the integral Hodge conjecture for $A$ in degree $p$ is equivalent to
+$\theta^p/p!$ being algebraic (we already know $\theta^p = p! \cdot
+\theta^p/p!$ is). For $p = 1$ this is clear. For curves, $p = g - 1$, the class
+$\theta^{g-1}/(g-1)!$ is called the \emph{minimal class}.
+\begin{itemize}
+    \item If $(A, \theta) = (J(C), \theta)$ is a Jacobian, then the
+    Abel--Jacobi image of $C$ has class $\theta^{g-1}/(g-1)!$ (Poincar\'e's
+    formula). Every principally polarized abelian variety of dimension
+    $g \leq 3$ is a product of Jacobians, so the minimal class is algebraic
+    there.
+    \item Conversely, by the Matsusaka--Ran criterion
+    \cite{Matsusaka59, Ran81}, if the minimal class is represented by an
+    \emph{effective} curve then $(A, \theta)$ is a product of Jacobians. Since
+    $\dim \mathcal{M}_g = 3g - 3 < g(g+1)/2 = \dim \cA_g$ for $g \geq 4$, the
+    minimal class on a very general $A$ of dimension $\geq 4$ is not effective.
+    It could still be a difference of effective classes.
+    \item For $g = 4, 5$ the very general principally polarized abelian variety
+    is a Prym variety, and the Abel--Prym curve has class
+    $2\theta^{g-1}/(g-1)!$.
+\end{itemize}
+
+\begin{theorem}[Engel--de Gaay Fortman--Schreieder \cite{EdGFS25}]\label{thm:EdGFS}
+    Let $(A, \theta)$ be a very general principally polarized abelian variety
+    of dimension $g \geq 4$. Then the class of every curve on $A$ is an
+    \emph{even} multiple of $\theta^{g-1}/(g-1)!$. In particular, the minimal
+    class is a non-algebraic integral Hodge class, and the integral Hodge
+    conjecture fails for $A$.
+\end{theorem}
+
+They prove the same for the intermediate Jacobian of a very general cubic
+threefold, which implies that very general cubic threefolds are not stably
+rational.
+
+\begin{remark}[Exceptional Hodge classes]
+    The very general abelian variety has as few Hodge classes as possible.
+    Special abelian varieties can have Hodge classes that are not polynomials
+    in divisor classes, and for these the Hodge conjecture is a real problem.
+    The classical example is due to Weil \cite{Weil77}: if an imaginary
+    quadratic field $K$ acts on an abelian fourfold $A$ so that each embedding
+    of $K$ occurs with multiplicity $2$ on $H^{1,0}$, then
+    $\Lambda^4_K H^1(A, \Q) \subseteq H^4(A, \Q)$ is a $2$-dimensional space of
+    Hodge classes (\emph{Weil classes}), which for very general such $A$ are
+    not generated by divisors. Proving that Weil classes are algebraic is a
+    much-studied test case of the Hodge conjecture. See \cite{Gordon99} for a
+    survey.
+\end{remark}
+
+\section{Lagrangian fibrations}
+
+\begin{definition}[\cite{BakkerLehn22}]
+    A \emph{primitive symplectic variety} is a normal compact K\"ahler space
+    $X$ with a holomorphic symplectic form $\sigma$ on $X^{\mathrm{reg}}$ that
+    extends holomorphically to a resolution of $X$, such that
+    $H^1(X, \cO_X) = 0$ and $H^0(X, \Omega_X^{[2]}) = \C \sigma$. The smooth
+    ones are exactly the irreducible hyperk\"ahler manifolds.
+\end{definition}
+
+Let $X$ be a primitive symplectic variety of dimension $2n$. A
+\emph{Lagrangian fibration} is a surjective morphism $f \colon X \to B$ with
+connected fibers onto a normal projective variety with
+$0 < \dim B < 2n$. Then $\dim B = n$, the fibers are Lagrangian, and the fiber
+$X_b$ over a general point $b \in B$ is an abelian variety of dimension $n$
+(Matsushita \cite{Matsushita99}, in the smooth case).
+
+Let $B^0 \subseteq B$ be the dense open subset over which $f$ is smooth. Fixing
+an ample class on $X$ and restricting it to the fibers polarizes every $X_b$,
+$b \in B^0$, with the same polarization type $\delta$. So we get a moduli map
+\begin{equation*}
+    \phi \colon B^0 \to \cA_{n, \delta}, \qquad b \mapsto [X_b],
+\end{equation*}
+where $\cA_{n,\delta}$ is the moduli space of $n$-dimensional abelian
+varieties with a polarization of type $\delta$ (the analogue of $\cA_n$ for
+non-principal polarizations).
+
+\begin{definition}
+    The Lagrangian fibration $f$ is \emph{maximally varying} if $\phi$ is
+    generically finite onto its image, i.e.\ the isomorphism class of $X_b$
+    varies in all $n = \dim B$ directions.
+\end{definition}
+
+\begin{example}\label{ex:K3n}
+    Let $S \to \PP^1$ be an elliptic K3 surface whose $j$-invariant is not
+    constant. Then
+    \begin{equation*}
+        S^{[n]} \to \Sym^n S \to \Sym^n \PP^1 \cong \PP^n
+    \end{equation*}
+    is a Lagrangian fibration, whose fiber over $b = \{t_1, \ldots, t_n\}$
+    (distinct points with smooth fibers $E_{t_i}$) is
+    $E_{t_1} \times \cdots \times E_{t_n}$. Since $j$ is not constant, this
+    fibration is maximally varying. Since moreover isogeny classes are
+    countable, for very general $b$ the curves $E_{t_i}$ have no CM and are
+    pairwise non-isogenous. So by
+    \Cref{prop:product-elliptic},
+    \begin{equation*}
+        \MT(X_b) = \Gm \cdot (\Sp_{2,\Q})^n.
+    \end{equation*}
+\end{example}
+
+The main theorem says that this is what always happens, up to replacing
+$\Sp_2$ by $\Sp_{2h}$.
+
+\begin{theorem}[Varvak]\label{thm:main}
+    Let $X$ be a primitive symplectic variety with a maximally varying
+    Lagrangian fibration $f \colon X \to B$. For very general $b \in B$,
+    \begin{equation*}
+        \MT(X_b) \cong \Gm \cdot (\Sp_{2h, \Q})^k
+    \end{equation*}
+    for some $h, k \geq 1$. Equivalently, $\Hg(X_b) \cong (\Sp_{2h,\Q})^k$.
+\end{theorem}
+
+(For the equivalence: if $\MT = \Gm \cdot S$ with $S$ semisimple, then
+$S = [\MT, \MT] = [\Hg, \Hg] \subseteq \Hg$, and $\Hg$ is a connected subgroup of
+$(\MT \cap \SL(V))$, whose identity component is $S$.)
+
+\begin{remark}[The maximal variation hypothesis is necessary]
+    Let $A = E \times F$ be a product of elliptic curves and
+    $X = K_n(A) \subseteq A^{[n+1]}$ the generalized Kummer variety. The
+    projection $A \to E$ induces a Lagrangian fibration $X \to \PP^n$, and
+    over a dense open subset of $\PP^n$ every fiber is isomorphic to
+    \begin{equation*}
+        \Big\{(y_1, \ldots, y_{n+1}) \in F^{n+1} : \sum_i y_i = 0\Big\}
+        \cong F^n.
+    \end{equation*}
+    So this fibration is isotrivial ($\phi$ is constant). If $F$ has CM by $K$,
+    then $\MT(X_b) = \MT(F) = \Res_{K/\Q}\Gm$ is a torus, not of the form in
+    \Cref{thm:main}. (The Hodge conjecture still holds for $F^n$: the Hodge
+    ring of a power of an elliptic curve is generated by divisor classes.)
+    Matsushita conjectured that for a Lagrangian fibration of a hyperk\"ahler
+    manifold, $\phi$ is either constant or generically finite onto its image,
+    so conjecturally the isotrivial fibrations are the only ones excluded.
+\end{remark}
+
+\begin{corollary}\label{cor:main}
+    In the situation of \Cref{thm:main}, for very general $b \in B$ the
+    abelian variety $X_b$, and every power $X_b^m$, satisfies the Hodge
+    conjecture.
+\end{corollary}
+
+The proof of \Cref{thm:main} is not the topic of this talk. Instead, let us
+see how the corollary follows. It is a statement purely about abelian
+varieties:
+
+\begin{theorem}\label{thm:HC-from-MT}
+    Let $A$ be an abelian variety with $\Hg(A) \cong (\Sp_{2h, \Q})^k$. Then
+    every Hodge class on $A$ is a polynomial in divisor classes. In
+    particular, $A$ satisfies the Hodge conjecture, and so does every power
+    $A^m$.
+\end{theorem}
+
+The proof has two steps. First we pin down how $\Hg(A)$ acts on
+$V = H^1(A, \Q)$, and then we compute invariants.
+
+\begin{lemma}\label{lem:rep}
+    Write $\Hg(A) = S_1 \times \cdots \times S_k$ with $S_i \cong \Sp_{2h,\Q}$,
+    and let $W_i$ be the standard $2h$-dimensional representation of $S_i$.
+    Let $V^{(i)} = V^{\prod_{j \neq i} S_j}$. Then
+    \begin{equation*}
+        V = \bigoplus_{i=1}^k V^{(i)}, \qquad V^{(i)} \cong W_i \otimes M_i,
+    \end{equation*}
+    where $M_i$ is a vector space with trivial action, of dimension $m_i$.
+\end{lemma}
+\begin{proof}
+    Let $\mu = h|_{U(1)} \colon U(1) \to \Hg(A)(\R)$, with components
+    $\mu_i \colon U(1) \to S_i(\R)$.
+    \begin{enumerate}[label=(\alph*)]
+        \item \emph{Each $\mu_i$ is nontrivial.} Otherwise
+        $h(U(1)) \subseteq \prod_{j \neq i} S_j$, a smaller $\Q$-subgroup,
+        contradicting the minimality of $\Hg(A)$. (This is where we use that
+        the factors $S_i$ are defined over $\Q$.)
+        \item \emph{Each irreducible constituent of $V_\C$ is a representation
+        of a single factor.} Let $U = U_1 \boxtimes \cdots \boxtimes U_k$ be an
+        irreducible constituent. The torus $\mu(U(1))$ acts on $V_\C$ with
+        weights exactly $\pm 1$ (by $z$ on $V^{1,0}$ and $\ol{z} = z^{-1}$ on
+        $V^{0,1}$). If $U_i$ is nontrivial, then $\mu_i$ acts on $U_i$
+        nontrivially (as $S_i \to \GL(U_i)$ has finite kernel) with
+        determinant $1$, so with weights $a < 0 < b$ among others. If $U_i$
+        and $U_j$ were both nontrivial for some $i \neq j$, with $\mu_j$-weights
+        $c < 0 < d$, then $\mu$ would have the three distinct weights
+        $a + c < a + d < b + d$ on $U$. This is impossible, and $U$ cannot be
+        trivial (weight $0$), so $U = U_i$ for exactly one $i$, and $\mu_i$
+        acts on $U_i$ with weights exactly $\pm 1$.
+        \item \emph{$U_i$ is the standard representation.} Since $\mu_i$ has
+        weights $\pm 1$ on $U_i$, it has weights in $\{0, \pm 2\}$ on
+        $\fsp_{2h} \subseteq \End(U_i)$. In standard coordinates, with $\mu_i$
+        dominant, this forces $\mu_i = (1, \ldots, 1)$. If $\lambda$ is the
+        highest weight of $U_i$, then the weights $\lambda$ and
+        $(-\lambda_1, \lambda_2, \ldots, \lambda_h)$ pair with $\mu_i$ to
+        $\sum_j \lambda_j \in \{\pm 1\}$ and
+        $\sum_j \lambda_j - 2\lambda_1 \in \{\pm 1\}$, which forces
+        $\lambda = (1, 0, \ldots, 0)$.
+        \item So $V^{(i)}_\C$ is isotypic of type $W_{i,\C}$ and
+        $V = \bigoplus_i V^{(i)}$. Since $W_i$ is defined over $\Q$ and
+        absolutely irreducible,
+        $V^{(i)} \cong W_i \otimes \Hom_{S_i}(W_i, V^{(i)})$. \qedhere
+    \end{enumerate}
+\end{proof}
+
+\begin{remark}
+    By \Cref{cor:key}, the $V^{(i)}$ are sub-Hodge structures and
+    $\End_{\mathrm{HS}}(V^{(i)}) = \End(M_i)$. So
+    $A \sim A_1^{m_1} \times \cdots \times A_k^{m_k}$ up to isogeny, with the
+    $A_i$ pairwise non-isogenous abelian varieties of dimension $h$ satisfying
+    $\Hg(A_i) = \Sp_{2h}$, and $\dim A = h \sum_i m_i$. In
+    \Cref{ex:K3n}, $h = 1$, $k = n$, and all $m_i = 1$.
+\end{remark}
+
+\begin{remark}[Why splitting over $\Q$ matters]
+    The abstract group $\Hg(A)_\C$ does not determine the Hodge classes.
+    Mumford \cite{Mumford69} constructed abelian fourfolds with
+    $\End(A) = \Z$ and $\Hg(A)_\C \cong \SL_{2,\C}^3$, acting on
+    $V_\C \cong \C^2 \otimes \C^2 \otimes \C^2$. There $\Hg(A)$ is a non-split
+    $\Q$-form of $\SL_2^3$, two of the three factors of $\Hg(A)_\R$ are
+    compact, $\mu$ is trivial on them, and step (a) above fails. Similarly,
+    \Cref{ex:A2}(b) shows that $\Hg(A)_\C \cong \Sp_{2h,\C}^k$ does not imply
+    $\Hg(A) \cong \Sp_{2h,\Q}^k$.
+\end{remark}
+
+The second step is classical invariant theory.
+
+\begin{lemma}[First fundamental theorem for $\Sp$, skew version \cite{Howe89}]\label{lem:FFT}
+    Let $W$ be a symplectic $\Q$-vector space with symplectic class $\theta$,
+    and $M$ a finite-dimensional $\Q$-vector space with trivial
+    $\Sp(W)$-action. Then the algebra $(\Lambda^\bullet(W \otimes M))^{\Sp(W)}$
+    is generated by its degree $2$ part, which is
+    $\theta \otimes \Sym^2 M \subseteq (\Lambda^2 W \otimes \Sym^2 M) \oplus
+    (\Sym^2 W \otimes \Lambda^2 M) = \Lambda^2(W \otimes M)$.
+\end{lemma}
+
+When $\dim M = 1$ this is just \Cref{lem:sp-invariants}.
+
+\begin{proof}[Proof of \Cref{thm:HC-from-MT}]
+    By \Cref{lem:rep},
+    \begin{equation*}
+        H^\bullet(A, \Q) = \Lambda^\bullet V =
+        \bigotimes_{i=1}^k \Lambda^\bullet (W_i \otimes M_i),
+    \end{equation*}
+    and $S_i$ acts only on the $i$-th factor. Hence by \Cref{prop:key},
+    \begin{equation*}
+        \Hdg^\bullet(A) = \big(\Lambda^\bullet V\big)^{S_1 \times \cdots \times
+        S_k} = \bigotimes_{i=1}^k \big(\Lambda^\bullet(W_i \otimes
+        M_i)\big)^{S_i}.
+    \end{equation*}
+    By \Cref{lem:FFT}, this algebra is generated by its degree $2$ part, which
+    consists of Hodge classes in $H^2(A, \Q)$. By Lefschetz $(1,1)$ these are
+    classes of $\Q$-divisors, and products of divisor classes are algebraic
+    (intersect general translates). So every Hodge class on $A$ is algebraic.
+
+    For $A^m$: by \Cref{rmk:MT-basic}(4), $\Hg(A^m) = \Hg(A)$, now acting on
+    $V^{\oplus m} = \bigoplus_i W_i \otimes (M_i \otimes \Q^m)$, and the same
+    argument applies.
+\end{proof}
+
+\begin{remark}
+    When all $m_i = 1$ (as in \Cref{ex:K3n}), only \Cref{lem:sp-invariants} is
+    needed: the Hodge ring of $A$ is $\bigotimes_i \Q[\theta_i]/(\theta_i^{h+1})$,
+    where $\theta_i \in \Lambda^2 W_i \subseteq H^2(A, \Q)$ is the pullback of a
+    polarization along $A \to A_i$. This is exactly parallel to
+    \Cref{thm:very-general}, with $\Sp_{2h}^k$ in place of $\Sp_{2g}$.
+\end{remark}
+
+
+\bibliographystyle{alpha}
+\bibliography{refs}
+
+
+\end{document}
