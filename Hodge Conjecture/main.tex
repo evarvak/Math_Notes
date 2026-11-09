@@ -57,7 +57,7 @@
 
 \newcommand{\cA}{\mathcal{A}}
 \newcommand{\cO}{\mathcal{O}}
-\newcommand{\fH}{\mathfrak{H}}
+\newcommand{\HH}{\mathbb{H}}
 \newcommand{\fh}{\mathfrak{h}}
 \newcommand{\fsl}{\mathfrak{sl}}
 \newcommand{\fsp}{\mathfrak{sp}}
@@ -373,7 +373,7 @@ scalar.
 Fix $V_\Z = \Z^{2g}$ with its standard symplectic form $\psi$, and let
 $V = V_\Z \otimes \Q$. Let
 \begin{equation*}
-    \fH_g = \left\{ h \colon \Del \to \GL(V_\R) \;\middle|\;
+    \HH_g = \left\{ h \colon \Del \to \GL(V_\R) \;\middle|\;
     \begin{array}{l}
         h \text{ is a Hodge structure of weight } 1 \text{ with}\\
         \psi(h(i) x, h(i) y) = \psi(x, y), \text{ and } \psi(x, h(i)y)
@@ -384,24 +384,24 @@ The last two conditions say that $\psi$ is a polarization of the Hodge
 structure (for a suitable sign convention).
 
 \begin{theorem}[Riemann]
-    Points of $\fH_g$ are in bijection with isomorphism classes of pairs
+    Points of $\HH_g$ are in bijection with isomorphism classes of pairs
     $(A, \beta)$, where $A$ is a principally polarized abelian variety of
     dimension $g$ and $\beta \colon H^1(A, \Z) \cong V_\Z$ is a symplectic
     isomorphism.
 \end{theorem}
 
-The group $\Sp(V_\R) = \Sp_{2g}(\R)$ acts on $\fH_g$ by conjugation,
+The group $\Sp(V_\R) = \Sp_{2g}(\R)$ acts on $\HH_g$ by conjugation,
 $g \cdot h = g h g^{-1}$, and this action is transitive with stabilizer
 isomorphic to $U(g)$. So
 \begin{equation*}
-    \fH_g \cong \Sp_{2g}(\R)/U(g) \cong
+    \HH_g \cong \Sp_{2g}(\R)/U(g) \cong
     \{\tau \in M_g(\C) : \tau = \tau^T, \ \mathrm{Im}(\tau) > 0\},
 \end{equation*}
 the classical Siegel upper half space, of complex dimension $g(g+1)/2$.
 Forgetting the marking $\beta$, we get the moduli space of principally polarized
 abelian varieties
 \begin{equation*}
-    \cA_g = \Sp_{2g}(\Z) \backslash \fH_g,
+    \cA_g = \Sp_{2g}(\Z) \backslash \HH_g,
 \end{equation*}
 which is a quasi-projective variety of dimension $g(g+1)/2$ (Baily--Borel).
 
@@ -410,19 +410,19 @@ which is a quasi-projective variety of dimension $g(g+1)/2$ (Baily--Borel).
     $\Gamma \backslash X$, where $G$ is a reductive group over $\Q$, $X$ is a
     $G(\R)$-conjugacy class of homomorphisms $\Del \to G_\R$ (satisfying axioms
     that make $X$ a Hermitian symmetric domain), and $\Gamma \subseteq G(\Q)$
-    is an arithmetic subgroup. Here $G = \GSp(V)$ and $X = \fH_g$. The point
+    is an arithmetic subgroup. Here $G = \GSp(V)$ and $X = \HH_g$. The point
     is that the period domain is a single orbit of a real algebraic group
     acting by conjugation on Hodge structures. We will see that the Hodge loci
     in $\cA_g$ have the same form, for smaller groups
     (\Cref{subsec:special}).
 \end{remark}
 
-The key feature of $\fH_g$ is that for every $h \in \fH_g$,
+The key feature of $\HH_g$ is that for every $h \in \HH_g$,
 \begin{equation*}
     H^{2p}(A_h, \Q) = \bigwedge^{2p} V
 \end{equation*}
 is the \emph{same} $\Q$-vector space; only the Hodge decomposition, induced by
-$h$, moves. This makes Hodge loci in $\fH_g$ very concrete.
+$h$, moves. This makes Hodge loci in $\HH_g$ very concrete.
 
 \section{Hodge loci}\label{sec:hodge-loci}
 
@@ -493,16 +493,24 @@ Much more is true.
 \end{remark}
 
 \begin{definition}
-    A point $s \in S$ is \emph{very general} if $s \notin \HL(f)$.
+    Let $S$ be an irreducible complex variety. A property holds for a
+    \emph{very general} point $s \in S$ if there are countably many proper
+    closed subvarieties $Z_1, Z_2, \ldots \subsetneq S$ such that the property
+    holds for every $s \in S \setminus \bigcup_i Z_i$.
 \end{definition}
 
-If $\NL(\lambda) \neq \wt{S}$, then $\NL(\lambda)$ is nowhere dense in
-$\wt{S}$, so $\pi(\NL(\lambda))$ is a countable union of nowhere dense subsets
-of $S$, and by CDK (when $S$ is quasi-projective) it is a proper closed
-subvariety. There are countably many
-$\lambda \in H$, so the very general points are the complement of a countable
-union of proper closed subvarieties; by the Baire category theorem they are
-dense. By construction:
+For comparison, a property holds for a \emph{general} point if it holds
+outside a single proper closed subvariety. By the Baire category theorem, the
+complement of a countable union of proper closed subvarieties is dense in $S$
+in the analytic topology, so in particular very general points exist.
+
+Now suppose $S$ is quasi-projective and $f$ is algebraic. If
+$\NL(\lambda) \neq \wt{S}$, then $\NL(\lambda)$ is nowhere dense in $\wt{S}$,
+so $\pi(\NL(\lambda))$ is a countable union of nowhere dense subsets of $S$,
+and by CDK it is a proper closed subvariety. There are countably many
+$\lambda \in H$, so $\HL(f)$ is a countable union of proper closed
+subvarieties of $S$. Every $s \notin \HL(f)$ has the following property by
+construction, so in particular a very general point does.
 
 \begin{lemma}
     If $s \in S$ is very general, then a class in $H^{2p}(X_s, \Q)$ is Hodge if
@@ -512,34 +520,34 @@ dense. By construction:
 \end{lemma}
 
 \subsection{Hodge loci in \texorpdfstring{$\cA_g$}{A\_g}}
-Over $\fH_g$ everything is explicit, since $H^{2p}(A_h, \Q) = \bigwedge^{2p} V$
+Over $\HH_g$ everything is explicit, since $H^{2p}(A_h, \Q) = \bigwedge^{2p} V$
 for every $h$. For a tensor $t \in T^{a,b}(V)$ (e.g.\ $t \in \bigwedge^{2p}V$),
 put
 \begin{equation*}
-    \NL(t) = \{h \in \fH_g : t \text{ is a Hodge class for } h\}.
+    \NL(t) = \{h \in \HH_g : t \text{ is a Hodge class for } h\}.
 \end{equation*}
 For a $\Q$-algebraic subgroup $H \subseteq \Sp(V)$, put
 \begin{equation*}
-    \fH_g(H) = \{h \in \fH_g : h(U(1)) \subseteq H(\R)\}.
+    \HH_g(H) = \{h \in \HH_g : h(U(1)) \subseteq H(\R)\}.
 \end{equation*}
 
 \begin{proposition}
     \begin{enumerate}[label=(\roman*)]
-        \item $\NL(t) = \fH_g(G_t)$, where $G_t = \Stab_{\Sp(V)}(t)$.
-        \item $\fH_g(H)$ is stable under conjugation by $H(\R)$. In particular,
+        \item $\NL(t) = \HH_g(G_t)$, where $G_t = \Stab_{\Sp(V)}(t)$.
+        \item $\HH_g(H)$ is stable under conjugation by $H(\R)$. In particular,
         it contains the orbit $H(\R) \cdot h$ of any of its points.
     \end{enumerate}
 \end{proposition}
 \begin{proof}
     (i) is \Cref{lem:U1}, together with the fact that
-    $h(U(1)) \subseteq \Sp(V_\R)$ for all $h \in \fH_g$. For (ii), if
+    $h(U(1)) \subseteq \Sp(V_\R)$ for all $h \in \HH_g$. For (ii), if
     $h(U(1)) \subseteq H(\R)$ and $g \in H(\R)$, then
     $g h(U(1)) g^{-1} \subseteq H(\R)$.
 \end{proof}
 
-So Hodge loci in $\fH_g$ are cut out by $\Q$-algebraic subgroups of $\Sp(V)$.
-Given $h \in \fH_g$, it is then natural to look at the \emph{smallest}
-$\Q$-subgroup $H \subseteq \Sp(V)$ with $h \in \fH_g(H)$, i.e.\ with
+So Hodge loci in $\HH_g$ are cut out by $\Q$-algebraic subgroups of $\Sp(V)$.
+Given $h \in \HH_g$, it is then natural to look at the \emph{smallest}
+$\Q$-subgroup $H \subseteq \Sp(V)$ with $h \in \HH_g(H)$, i.e.\ with
 $h(U(1)) \subseteq H(\R)$. This is the Hodge group of $A_h$, which we study
 next. We return to Hodge loci in $\cA_g$ in \Cref{subsec:special}.
 
@@ -617,8 +625,7 @@ The reason to care about $\Hg$ is the following.
     \end{enumerate}
 \end{corollary}
 
-In fact $\Hg(V)$ is \emph{determined} by the Hodge classes in all tensor
-constructions:
+In fact $\Hg(V)$ is determined by the Hodge classes in all tensor constructions:
 
 \begin{fact}[Deligne \cite{Deligne82}]\label{fact:deligne}
     If $V$ is polarizable, then $\Hg(V)$ is the subgroup of $\GL(V)$ fixing
@@ -663,9 +670,9 @@ $\Sp(V) = \SL(V)$.
 \end{proof}
 
 \begin{remark}
-    $E_\tau = \C/(\Z + \tau\Z)$ has CM if and only if $\tau \in \fH_1$ is an
+    $E_\tau = \C/(\Z + \tau\Z)$ has CM if and only if $\tau \in \HH_1$ is an
     imaginary quadratic number. So CM elliptic curves correspond to a
-    \emph{countable dense} subset of $\fH_1$.
+    \emph{countable dense} subset of $\HH_1$.
 \end{remark}
 
 \begin{example}[Hodge classes on $E \times E$]\label{ex:ExE}
@@ -739,13 +746,13 @@ Note that $\SL_2 = \Sp_2$, so $\MT(E_1 \times \cdots \times E_n) =
 \subsection{Special subvarieties}\label{subsec:special}
 We now return to Hodge loci in $\cA_g$. By minimality of the Hodge group,
 \begin{equation*}
-    \fH_g(H) = \{h \in \fH_g : \Hg(A_h) \subseteq H\}
+    \HH_g(H) = \{h \in \HH_g : \Hg(A_h) \subseteq H\}
 \end{equation*}
 for every $\Q$-algebraic subgroup $H \subseteq \Sp(V)$.
 
 \begin{fact}[see \cite{Moonen04, Milne05}]\label{fact:special}
-    Let $h \in \fH_g$ and $H = \Hg(A_h)$. Then $H(\R)^+ \cdot h$ is a closed
-    complex submanifold of $\fH_g$ (a Hermitian symmetric domain), and its
+    Let $h \in \HH_g$ and $H = \Hg(A_h)$. Then $H(\R)^+ \cdot h$ is a closed
+    complex submanifold of $\HH_g$ (a Hermitian symmetric domain), and its
     image in $\cA_g$ is a closed algebraic subvariety, called a \emph{special}
     (or \emph{Shimura}) subvariety. Its very general point has Hodge group
     exactly $H$. The irreducible components of Hodge loci in $\cA_g$ are
@@ -786,14 +793,14 @@ So we have a dictionary:
         \item Split $V = V_1 \oplus V_2$ into $\psi$-orthogonal planes, so
         $\theta = \theta_1 + \theta_2$ with $\theta_i \in \bigwedge^2 V_i$. Then
         $G_{\theta_1} = \SL(V_1) \times \SL(V_2)$, and
-        $\NL(\theta_1) = \fH_1 \times \fH_1$, whose image in $\cA_2$
+        $\NL(\theta_1) = \HH_1 \times \HH_1$, whose image in $\cA_2$
         is the locus of products $E_1 \times E_2$. Its generic Hodge group is
         $\SL_2 \times \SL_2 = (\Sp_{2,\Q})^2$ by
         \Cref{prop:product-elliptic}.
         \item Let $F$ be a real quadratic field acting on $V$, making $V$ a
         $2$-dimensional $F$-vector space with $\psi = \Tr_{F/\Q} \circ \psi_F$.
         Then $H = \Res_{F/\Q} \SL_2$ has $H(\R) = \SL_2(\R) \times \SL_2(\R)$,
-        the orbit is again $\fH_1 \times \fH_1$, and its image in $\cA_2$ is a
+        the orbit is again $\HH_1 \times \HH_1$, and its image in $\cA_2$ is a
         Hilbert modular surface, parametrizing abelian surfaces with real
         multiplication by $F$.
     \end{enumerate}
@@ -833,14 +840,15 @@ So we have a dictionary:
 \end{theorem}
 \begin{proof}
     For each of the countably many tensors $t \in T^{a,b}(V)$, $\NL(t)$ is a
-    closed analytic subset of $\fH_g$. Take $h$ outside every $\NL(t)$ that is
-    not all of $\fH_g$. (Note that $\gamma \cdot \NL(t) = \NL(\gamma t)$ for
+    closed analytic subset of $\HH_g$. Take $h$ outside every $\NL(t)$ that is
+    not all of $\HH_g$. (Note that $\gamma \cdot \NL(t) = \NL(\gamma t)$ for
     $\gamma \in \Sp_{2g}(\Z)$, so this is a condition on the image of $h$ in
-    $\cA_g$.)
+    $\cA_g$. By CDK, the image of each such $\NL(t)$ is a proper closed
+    subvariety of $\cA_g$, so this condition holds for very general $h$.)
 
     \emph{Claim: every Hodge tensor $t$ for $h$ is $\Sp(V)$-invariant.}
-    Indeed, $\NL(t) = \fH_g$, so $t$ is fixed by $h'(U(1))$ for every
-    $h' \in \fH_g$. Since $\fH_g = \{g h g^{-1} : g \in \Sp(V_\R)\}$, this
+    Indeed, $\NL(t) = \HH_g$, so $t$ is fixed by $h'(U(1))$ for every
+    $h' \in \HH_g$. Since $\HH_g = \{g h g^{-1} : g \in \Sp(V_\R)\}$, this
     means $\Stab(t)$ contains every $\Sp(V_\R)$-conjugate of $h(U(1))$. These
     generate a nontrivial connected normal subgroup of $\Sp(V_\R)$, whose
     Zariski closure is all of $\Sp(V_\R)$ because $\Sp_{2g}$ is simple. So
