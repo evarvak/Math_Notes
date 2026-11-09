@@ -521,6 +521,12 @@ the primative weight two cohomogy of the singular fibers.
 \end{example}
 
 
+\begin{example}
+Let \(f: X \to B\) be a fibration of curves over a surface. Denote 
+
+\end{example}
+
+
 
 
 \subsection{Resolutions of normal isolated singularities}
@@ -572,8 +578,8 @@ We can check that \(H^2(X, \Q) = \Q\) by noting that all non-ruling classes in
 
 
 \begin{example}
-This time, set \(S \subseteq \mathbb{P}^2\) to be a quadric surface, and consider
-the cone \(X \subseteq \mathbb{P}^3\) over \(S\). We have two resolutions to 
+This time, set \(S \subseteq \mathbb{P}^3\) to be a quadric surface, and consider
+the cone \(X \subseteq \mathbb{P}^4\) over \(S\). We have two resolutions to 
 choose from: the blow-up of the cone point \(x \in X\), or the blow-up of a line 
 \(L \ni x\) in \(X\).
 
@@ -581,10 +587,13 @@ First, let us consider the former: \(\wt{X} = \mathrm{Bl}_x X\), \(f: \wt{X} \to
 As before, let \(K = Rf_* \Q_X\). We once again have \(K|_{X^\circ} = \Q_{X^\circ}(0)\).
 Anything interesting will again have to happen over the cone point. The fiber 
 \(\wt{X}_x \simeq S\), which happens to be simply connected. We see that 
-\begin{equation}
-    K = \Q_X(0)[0] \oplus H^2(S, \Q)_x[-2] \oplus \Q_x(-2)[-4].
-\end{equation}
-The first summand is supported in dimension two, while the primitive part of the second 
+\begin{align*}
+    K &= \Q_X(0)[0] \oplus H^2(S, \Q)_x[-2] \oplus \Q_x(-2)[-4] \\
+    &= \underbrace{\Q_X(0)[0] \oplus H^2(S, \Q)_x^{\mathrm{prim}}[-2]}_{\mathrm{Perversity}\ -3}
+    \oplus\ \underbrace{\Q_x(-1)[-2]}_{\mathrm{Perversity}\ -4} \oplus 
+    \underbrace{\Q_x(-2)[-4]}_{\mathrm{Perversity}\ -2}.
+\end{align*}
+The first summand is supported in dimension three, while the primitive part of the second 
 is supported in dimension zero. Thus, they have the same perversity, and 
 \begin{equation}
     \mathscr{IC}_X = \Q_X(0)[0] \oplus H^2(S, \Q)_x^{\mathrm{prim}}[-2].
